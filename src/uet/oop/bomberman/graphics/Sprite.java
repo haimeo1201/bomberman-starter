@@ -55,6 +55,11 @@ public class Sprite {
 	public static Sprite player_dead1 = new Sprite(DEFAULT_SIZE, 4, 2, SpriteSheet.tiles, 14, 16);
 	public static Sprite player_dead2 = new Sprite(DEFAULT_SIZE, 5, 2, SpriteSheet.tiles, 13, 15);
 	public static Sprite player_dead3 = new Sprite(DEFAULT_SIZE, 6, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite[] p_up = {player_up, player_up_1 , player_up_2 , player_up} ;
+	public static Sprite[] p_down = { player_down, player_down_1 , player_down_2 , player_down};
+	public static Sprite[] p_right = {player_right, player_right_1 , player_right_2 , player_right} ;
+	public static Sprite[] p_left = { player_left, player_left_1 , player_left_2 , player_left };
 	
 	/*
 	|--------------------------------------------------------------------------
@@ -162,7 +167,8 @@ public class Sprite {
 	public static Sprite explosion_vertical_down_last = new Sprite(DEFAULT_SIZE, 1, 6, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical_down_last1 = new Sprite(DEFAULT_SIZE, 2, 6, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical_down_last2 = new Sprite(DEFAULT_SIZE, 3, 6, SpriteSheet.tiles, 16, 16);
-	
+
+	public static Sprite testMoving = movingSprite(player_right , player_right_1 , player_right_2 , 60 , 1000);
 	/*
 	|--------------------------------------------------------------------------
 	| Brick FlameSegment
@@ -227,7 +233,7 @@ public class Sprite {
 		if(calc < diff * 2) {
 			return x1;
 		}
-			
+
 		return x2;
 	}
 	

@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private final List<Entity> entities = new ArrayList<>();
+    private final List<Entity> stillObjects = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -47,32 +47,38 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
+        bomberman.input(scene);
         AnimationTimer timer = new AnimationTimer() {
+            private long lastUpdate = 0;
+
             @Override
-            public void handle(long l) {
-                render();
-                update();
+            public void handle(long now) {
+                if (now - lastUpdate >= 35_000_000) {
+                    render();
+                    update();
+                    lastUpdate = now;
+                }
             }
         };
         timer.start();
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
     }
 
     public void createMap() {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
+                Entity object ;
                 if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
+                } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
+
                 stillObjects.add(object);
             }
         }
