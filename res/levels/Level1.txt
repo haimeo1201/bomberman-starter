@@ -22,9 +22,9 @@ C - số cột của bản đồ
 
 2/ R dòng tiếp theo, mỗi dòng có C kí tự. Mỗi kí tự đại diện cho một đối tượng trên bản đồ:
 Tiles:
-# - Wall
-* - Brick
-x - Portal
+# - Wall #1
+* - Brick #2
+x - Portal #3
 
 Character:
 p - Bomber
@@ -33,7 +33,7 @@ p - Bomber
 
 Items:
 b - Bomb Item
-f - Flame Item
-s - Speed Item
+f - Flame Item #4
+s - Speed Item #5
 
-Kí tự khác các kí tự trên - Grass
+Kí tự khác các kí tự trên - Grass #0

@@ -7,19 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.map.TileMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static TileMap map1 = new TileMap("res/levels/map1.txt");
+
+    public static final int WIDTH = map1.getMapWidth();
+    public static final int HEIGHT = map1.getMapHeight();
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -52,7 +52,6 @@ public class BombermanGame extends Application {
         bomberman.input(scene);
         AnimationTimer timer = new AnimationTimer() {
             private long lastUpdate = 0;
-
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 35_000_000) {
@@ -70,15 +69,18 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
+        int mapArr[][] = map1.getMap();
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
                 Entity object ;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
+                int ij = mapArr[i][j];
+                if (ij == 1) {
+                    object = new Wall(j, i, Sprite.wall.getFxImage());
+                } else if (ij == 2) {
+                    object = new Brick(j, i, Sprite.brick.getFxImage());
                 } else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
-
                 stillObjects.add(object);
             }
         }
