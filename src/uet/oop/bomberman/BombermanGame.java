@@ -23,8 +23,8 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private final List<Entity> entities = new ArrayList<>();
-    private final List<Entity> stillObjects = new ArrayList<>();
+    public static final List<Entity> entities = new ArrayList<>();
+    public static final List<Entity> stillObjects = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -51,18 +51,23 @@ public class BombermanGame extends Application {
 
         bomberman.input(scene);
         AnimationTimer timer = new AnimationTimer() {
-            private long lastUpdate = 0;
+            long lastTime = System.nanoTime();
+            final double ns = 1000000000.0 / 25.0;
+            double delta = 0;
+            int updates = 0;
             @Override
             public void handle(long now) {
-                if (now - lastUpdate >= 35_000_000) {
+                delta += (now - lastTime) / ns;
+                lastTime = now;
+                while (delta >= 1) {
                     render();
                     update();
-                    lastUpdate = now;
+                    updates++;
+                    delta--;
                 }
             }
         };
         timer.start();
-
         createMap();
 
         entities.add(bomberman);
@@ -78,7 +83,12 @@ public class BombermanGame extends Application {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 } else if (ij == 2) {
                     object = new Brick(j, i, Sprite.brick.getFxImage());
-                } else {
+                } else if(ij == 3) {
+                    object = new Brick(j, i, Sprite.portal.getFxImage());
+                } else if(ij == 4) {
+                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+                }
+                else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
@@ -88,6 +98,14 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+    }
+
+    public static TileMap getMap1() {
+        return map1;
+    }
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
     }
 
     public void render() {
