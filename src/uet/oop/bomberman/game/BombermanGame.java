@@ -1,4 +1,4 @@
-package uet.oop.bomberman;
+package uet.oop.bomberman.game;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -8,6 +8,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.MapEntity.Brick;
+import uet.oop.bomberman.entities.MapEntity.FlameItem;
+import uet.oop.bomberman.entities.MapEntity.Grass;
+import uet.oop.bomberman.entities.MapEntity.Wall;
+import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
 
@@ -98,6 +103,10 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+        for (int i = 0; i < entities.size(); i++) {
+            Entity a = entities.get(i);
+            if(((Entity)a).isRemoved()) entities.remove(i);
+        }
     }
 
     public static TileMap getMap1() {
