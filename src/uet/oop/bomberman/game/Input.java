@@ -2,11 +2,11 @@ package uet.oop.bomberman.game;
 
 public class Input {
 
-    private boolean up;
-    private boolean down;
-    private boolean left;
-    private boolean right;
-    private boolean plant;
+    protected boolean up;
+    protected boolean down;
+    protected boolean left;
+    protected boolean right;
+    protected boolean plant;
 
     public Input() {
         up = false;

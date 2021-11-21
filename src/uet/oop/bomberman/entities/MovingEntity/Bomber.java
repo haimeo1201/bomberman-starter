@@ -36,45 +36,34 @@ public class Bomber extends MovingEntity {
 
 
     public void input(Scene scene) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                p_input.setPlant(true);
+                placeBomb();
+            } else {
+                p_input.setPlant(false);
                 p_input.setUp(event.getCode().equals(KeyCode.UP));
                 p_input.setDown(event.getCode().equals(KeyCode.DOWN));
                 p_input.setLeft(event.getCode().equals(KeyCode.LEFT));
                 p_input.setRight(event.getCode().equals(KeyCode.RIGHT));
-
-                if (event.getCode().equals(KeyCode.SPACE)) {
-                    p_input.setPlant(true);
-                    placeBomb();
-                } else {
-                    p_input.setPlant(false);
-                }
             }
         });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode().equals(KeyCode.UP)) {
-                    //up = false;
-                    p_input.setUp(false);
-                }
-                if (event.getCode().equals(KeyCode.DOWN)) {
-                    //down = false;
-                    p_input.setDown(false);
-                }
-                if (event.getCode().equals(KeyCode.LEFT)) {
-                    //left = false;
-                    p_input.setLeft(false);
-                }
-                if (event.getCode().equals(KeyCode.RIGHT)) {
-                    //right = false;
-                    p_input.setRight(false);
-                }
-                if (event.getCode().equals(KeyCode.SPACE)) {
-
-                }
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyCode.UP)) {
+                p_input.setUp(false);
+            }
+            if (event.getCode().equals(KeyCode.DOWN)) {
+                p_input.setDown(false);
+            }
+            if (event.getCode().equals(KeyCode.LEFT)) {
+                p_input.setLeft(false);
+            }
+            if (event.getCode().equals(KeyCode.RIGHT)) {
+                p_input.setRight(false);
+            }
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                p_input.setPlant(false);
             }
         });
     }
@@ -161,7 +150,6 @@ public class Bomber extends MovingEntity {
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
         bom.update();
-
         BombermanGame.entities.add(bom);
     }
 }
