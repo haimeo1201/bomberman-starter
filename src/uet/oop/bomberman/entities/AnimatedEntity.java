@@ -1,9 +1,8 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 
-public class AnimatedEntity extends MovingEntity {
+public class AnimatedEntity extends Entity {
 
     protected int _animate = 0;
     protected final int MAX_ANIMATE = 5000;
