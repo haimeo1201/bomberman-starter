@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Sound {
 
     public void bombSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File file = new File("D:\\bomber4\\bomberman-starter-starter-2\\src\\uet\\oop\\bomberman\\sound\\bomb.wav");
+        File file = new File("src/uet/oop/bomberman/sound/bomb.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
@@ -15,7 +15,7 @@ public class Sound {
 
     }
     public void footSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        File file = new File("D:\\bomber4\\bomberman-starter-starter-2\\src\\uet\\oop\\bomberman\\sound\\footstep.wav");
+        File file = new File("src/uet/oop/bomberman/sound/footstep.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
