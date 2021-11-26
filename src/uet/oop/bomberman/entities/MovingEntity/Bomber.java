@@ -8,7 +8,11 @@ import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
+import uet.oop.bomberman.sound.Sound;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,18 +56,68 @@ public class Bomber extends MovingEntity {
         scene.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.UP)) {
                 p_input.setUp(false);
+                Sound fs = new Sound();
+                try {
+                    fs.footSound();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
             if (event.getCode().equals(KeyCode.DOWN)) {
                 p_input.setDown(false);
+                Sound fs = new Sound();
+                try {
+                    fs.footSound();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
             if (event.getCode().equals(KeyCode.LEFT)) {
                 p_input.setLeft(false);
+                Sound fs = new Sound();
+                try {
+                    fs.footSound();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 p_input.setRight(false);
+                Sound fs = new Sound();
+                try {
+                    fs.footSound();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
                 p_input.setPlant(false);
+                Sound bs = new Sound();
+                try {
+                    bs.bombSound();
+                } catch (UnsupportedAudioFileException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
