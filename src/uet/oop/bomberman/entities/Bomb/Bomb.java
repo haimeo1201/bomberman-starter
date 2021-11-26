@@ -4,14 +4,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bomb extends AnimatedEntity {
+/*public class Bomb extends AnimatedEntity {
 
     public int _timeAfter = 60; //time for explosions to disappear
     protected double _timeToExplode = 60; //2sec in 30fps
+=======*/
+public class Bomb extends AnimatedEntity {
+
+    public int _timeAfter = 20; //time for explosions to disappear
+    protected double _timeToExplode = 90; //2sec in 30fps
     protected boolean _exploded = false;
     public List<Image> Img = new ArrayList<>();
     public List<String> pos = new ArrayList<>();
@@ -68,10 +72,13 @@ public class Bomb extends AnimatedEntity {
             }
         }
     }
+
     public void push(Sprite[] sprites, String Pos){
         pos.add(Pos);
         state.add(sprites);
         Img.add(sprites[0].getFxImage());
+
+        setImg(Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, _animate, 90).getFxImage());
     }
     private void explosion() {
         _animate = 0;

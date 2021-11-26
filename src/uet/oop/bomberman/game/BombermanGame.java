@@ -7,12 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.MapEntity.Brick;
-import uet.oop.bomberman.entities.MapEntity.FlameItem;
-import uet.oop.bomberman.entities.MapEntity.Grass;
-import uet.oop.bomberman.entities.MapEntity.Wall;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.Bomber;
+import uet.oop.bomberman.entities.MovingEntity.Enemy.Balloom;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
 
@@ -21,19 +18,25 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    public static TileMap map1 = new TileMap("res/levels/map1.txt");
+    public static final double FPS = 25.0;
 
+    //OBJ LIST
+    public static final List<Entity> movableEntities = new ArrayList<>();
+    public static final List<Entity> stillObjects = new ArrayList<>();
+    public static final List<Entity> destroyableObjects = new ArrayList<>();
+    ///** ADD CHOOSE MAP IN GUI **\\\
+    public static TileMap map1 = new TileMap("res/levels/map1.txt");
     public static final int WIDTH = map1.getMapWidth();
     public static final int HEIGHT = map1.getMapHeight();
-
     private GraphicsContext gc;
     private Canvas canvas;
-    public static final List<Entity> entities = new ArrayList<>();
-    public static final List<Entity> stillObjects = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
+    }
+
+    public static TileMap getMap1() {
+        return map1;
     }
 
     @Override
@@ -52,14 +55,21 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
 
+        //BOMBER
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         bomberman.input(scene);
+
+        //ENEMY
+        Balloom enemy = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
+
+        //TIMER
         AnimationTimer timer = new AnimationTimer() {
+            final double ns = 1000000000.0 / FPS;
             long lastTime = System.nanoTime();
-            final double ns = 1000000000.0 / 25.0;
             double delta = 0;
             int updates = 0;
+
             @Override
             public void handle(long now) {
                 delta += (now - lastTime) / ns;
@@ -73,53 +83,25 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-        createMap();
 
-        entities.add(bomberman);
-    }
-
-    public void createMap() {
-        int mapArr[][] = map1.getMap();
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
-                Entity object ;
-                int ij = mapArr[i][j];
-                if (ij == 1) {
-                    object = new Wall(j, i, Sprite.wall.getFxImage());
-                } else if (ij == 2) {
-                    object = new Brick(j, i, Sprite.brick.getFxImage());
-                } else if(ij == 3) {
-                    object = new Brick(j, i, Sprite.portal.getFxImage());
-                } else if(ij == 4) {
-                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                }
-                else {
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
-        }
+        map1.drawMap(stillObjects);
+        movableEntities.add(bomberman);
+        movableEntities.add(enemy);
     }
 
     public void update() {
-        entities.forEach(Entity::update);
-        for (int i = 0; i < entities.size(); i++) {
-            Entity a = entities.get(i);
-            if(((Entity)a).isRemoved()) entities.remove(i);
+        destroyableObjects.forEach(Entity::update);
+        for (int i = 0; i < destroyableObjects.size(); i++) {
+            Entity a = destroyableObjects.get(i);
+            if (a.isRemoved()) destroyableObjects.remove(i);
         }
-    }
-
-    public static TileMap getMap1() {
-        return map1;
-    }
-
-    public List<Entity> getStillObjects() {
-        return stillObjects;
+        movableEntities.forEach(Entity::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        destroyableObjects.forEach(g -> g.render(gc));
+        movableEntities.forEach(g -> g.render(gc));
     }
 }

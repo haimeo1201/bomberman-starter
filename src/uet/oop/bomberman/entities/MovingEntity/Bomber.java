@@ -1,26 +1,26 @@
 package uet.oop.bomberman.entities.MovingEntity;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
+import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.map.TileMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bomber extends MovingEntity {
 
-    protected float maxSpeed = 4f;
-    protected float acceleration = 1f;
-    protected float deAcceleration = 0.5f;
+    protected float maxSpeed = 3f;
+    protected float acceleration = 0.8f;
+    protected float deAcceleration = 0.4f;
+
+    List<Bomb> bomb = new ArrayList();
 
     protected Input p_input = new Input();
-
-    protected List<Bomb> bombList;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -30,10 +30,10 @@ public class Bomber extends MovingEntity {
     public void update() {
         move();
         mapCheck();
+        checkCollisionMap();
         doP_IMG();
         updateP_IMG();
     }
-
 
     public void input(Scene scene) {
         scene.setOnKeyPressed(event -> {
@@ -145,11 +145,15 @@ public class Bomber extends MovingEntity {
         }
     }
 
-
     public void placeBomb() {
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
-        bom.update();
-        BombermanGame.entities.add(bom);
+        bomb.add(bom);/*
+        TileMap tile = BombermanGame.getMap1();
+        tile.update(Math.round(x / tileSize),Math.round(y / tileSize),9);*/
+        BombermanGame.destroyableObjects.add(bom);
     }
+
 }
+
+

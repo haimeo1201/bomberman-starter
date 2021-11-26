@@ -1,6 +1,11 @@
 package uet.oop.bomberman.map;
 
+import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.MapEntity.*;
+import uet.oop.bomberman.graphics.Sprite;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileMap {
-    private int x;
-    private int y;
-
-    private int tileSize;
     private int[][] map;
 
     private int level;
@@ -43,8 +44,12 @@ public class TileMap {
         }
     }
 
-    public void update() {
+    public void render(GraphicsContext gc) {
 
+    }
+
+    public void update(int x,int y, int val) {
+        map[x][y] = val;
     }
 
     public int getLevel() {
@@ -63,27 +68,30 @@ public class TileMap {
         return map;
     }
 
-/*    public void draw() {
-        for (int r = 0 ; r < mapHeight ; r++) {
-            for (int c = 0 ; c < mapWidth ; c++) {
-                int rc = map[r][c];
-                Entity object;
-                if(rc == 0) {
-                    object = new Wall(c, r, Sprite.wall.getFxImage());
+    public void drawMap(List<Entity> mapObjects) {
+        int[][] mapArr = getMap();
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                Entity object ;
+                int ij = mapArr[i][j];
+                if (ij == 1) {
+                    object = new Wall(j, i, Sprite.wall.getFxImage());
+                } else if (ij == 2) {
+                    object = new Brick(j, i, Sprite.brick.getFxImage());
+                } else if(ij == 3) {
+                    object = new Portal(j, i, Sprite.portal.getFxImage());
+                } else if(ij == 4) {
+                    object = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
                 }
-                else if(rc == 1) {
-                    object = new Grass(c, r, Sprite.grass.getFxImage());
-                }
-                else if(rc == 2) {
-                    object = new Brick(c , r , Sprite.brick.getFxImage());
+                else if(ij == 9){
+                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
                 }
                 else {
-                    object = new Grass(c, r, Sprite.grass.getFxImage());
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
-
                 mapObjects.add(object);
             }
         }
-    }*/
+    }
 
 }
