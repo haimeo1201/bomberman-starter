@@ -7,15 +7,10 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-/*public class Bomb extends AnimatedEntity {
-
-    public int _timeAfter = 60; //time for explosions to disappear
-    protected double _timeToExplode = 60; //2sec in 30fps
-=======*/
 public class Bomb extends AnimatedEntity {
 
-    public int _timeAfter = 20; //time for explosions to disappear
-    protected double _timeToExplode = 90; //2sec in 30fps
+    public int _timeAfter = 50; //time for explosions to disappear
+    protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
     public List<Image> Img = new ArrayList<>();
     public List<String> pos = new ArrayList<>();
@@ -40,6 +35,7 @@ public class Bomb extends AnimatedEntity {
         else {
             if (!_exploded)
                 explosion();
+            else updateExplosion();
 
             if (_timeAfter > 0)
                 _timeAfter--;
@@ -48,9 +44,11 @@ public class Bomb extends AnimatedEntity {
         }
 
         animate();
+
         for(int i = 0;i < pos.size();i++){
             Img.set(i, Sprite.movingSprite(state.get(i)[0], state.get(i)[1], state.get(i)[2], _animate, 90).getFxImage());
         }
+
     }
     @Override
     public void render(GraphicsContext gc){
@@ -78,18 +76,23 @@ public class Bomb extends AnimatedEntity {
         state.add(sprites);
         Img.add(sprites[0].getFxImage());
 
-        setImg(Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, _animate, 90).getFxImage());
+        //setImg(Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, _animate, 90).getFxImage());
     }
+
     private void explosion() {
-        _animate = 0;
-        _timeToExplode = 60;
-        _timeAfter = 20;
         _exploded = true;
+    }
+
+    public void updateExplosion() {
+        state.set(0,Sprite.bombs_ex);
+        Img.set(0,Sprite.bombs_ex[0].getFxImage());
         push(Sprite.right_last, "right");
         push(Sprite.left_last, "left");
         push(Sprite.top_last, "top");
         push(Sprite.down_last, "down");
-        state.set(0,Sprite.bombs_ex);
-        Img.set(0,Sprite.bombs_ex[0].getFxImage());
+
+
     }
+
+
 }

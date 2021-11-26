@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 public class AnimatedEntity extends Entity {
 
-    protected final int MAX_ANIMATE = 3000;
+    protected final int MAX_ANIMATE = 600;
     protected int _animate = 0;
 
     public AnimatedEntity(int xUnit, int yUnit, Image img) {
