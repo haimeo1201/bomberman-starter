@@ -56,6 +56,8 @@ public class Sprite {
 	public static Sprite player_dead2 = new Sprite(DEFAULT_SIZE, 5, 2, SpriteSheet.tiles, 13, 15);
 	public static Sprite player_dead3 = new Sprite(DEFAULT_SIZE, 6, 2, SpriteSheet.tiles, 16, 16);
 
+	public static Sprite [] dead = {player_dead1, player_dead2, player_dead3};
+
 	public static Sprite[] p_up = {player_up, player_up_1 , player_up_2 , player_up} ;
 	public static Sprite[] p_down = { player_down, player_down_1 , player_down_2 , player_down};
 	public static Sprite[] p_right = {player_right, player_right_1 , player_right_2 , player_right} ;
@@ -135,7 +137,7 @@ public class Sprite {
 	public static Sprite bomb_1 = new Sprite(DEFAULT_SIZE, 1, 3, SpriteSheet.tiles, 13, 15);
 	public static Sprite bomb_2 = new Sprite(DEFAULT_SIZE, 2, 3, SpriteSheet.tiles, 12, 14);
 
-	public static Sprite[] bombs = {bomb , bomb_1 , bomb_2, bomb};
+	public static Sprite[] bombs = {bomb , bomb_1 , bomb_2};
 	/*
 	|--------------------------------------------------------------------------
 	| FlameSegment Sprites
@@ -144,7 +146,10 @@ public class Sprite {
 	public static Sprite bomb_exploded = new Sprite(DEFAULT_SIZE, 0, 4, SpriteSheet.tiles, 16, 16);
 	public static Sprite bomb_exploded1 = new Sprite(DEFAULT_SIZE, 0, 5, SpriteSheet.tiles, 16, 16);
 	public static Sprite bomb_exploded2 = new Sprite(DEFAULT_SIZE, 0, 6, SpriteSheet.tiles, 16, 16);
-	
+
+	public static Sprite[] bombs_ex = {bomb_exploded , bomb_exploded1 , bomb_exploded2};
+
+
 	public static Sprite explosion_vertical = new Sprite(DEFAULT_SIZE, 1, 5, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical1 = new Sprite(DEFAULT_SIZE, 2, 5, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical2 = new Sprite(DEFAULT_SIZE, 3, 5, SpriteSheet.tiles, 16, 16);
@@ -156,20 +161,28 @@ public class Sprite {
 	public static Sprite explosion_horizontal_left_last = new Sprite(DEFAULT_SIZE, 0, 7, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_horizontal_left_last1 = new Sprite(DEFAULT_SIZE, 0, 8, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_horizontal_left_last2 = new Sprite(DEFAULT_SIZE, 0, 9, SpriteSheet.tiles, 16, 16);
+
+    public static Sprite [] left_last = {explosion_horizontal_left_last, explosion_horizontal_left_last1, explosion_horizontal_left_last2};
 	
 	public static Sprite explosion_horizontal_right_last = new Sprite(DEFAULT_SIZE, 2, 7, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_horizontal_right_last1 = new Sprite(DEFAULT_SIZE, 2, 8, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_horizontal_right_last2 = new Sprite(DEFAULT_SIZE, 2, 9, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite [] right_last = {explosion_horizontal_right_last, explosion_horizontal_right_last1, explosion_horizontal_right_last2};
 	
 	public static Sprite explosion_vertical_top_last = new Sprite(DEFAULT_SIZE, 1, 4, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical_top_last1 = new Sprite(DEFAULT_SIZE, 2, 4, SpriteSheet.tiles, 16, 16);
-	public static Sprite explosion_vertical_top_last2 = new Sprite(DEFAULT_SIZE, 3, 4, SpriteSheet.tiles, 16, 16);
-	
+    public static Sprite explosion_vertical_top_last2 = new Sprite(DEFAULT_SIZE, 3, 4, SpriteSheet.tiles, 16, 16);
+
+    public static Sprite [] top_last = {explosion_vertical_top_last, explosion_vertical_top_last1, explosion_vertical_top_last2};
+
 	public static Sprite explosion_vertical_down_last = new Sprite(DEFAULT_SIZE, 1, 6, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical_down_last1 = new Sprite(DEFAULT_SIZE, 2, 6, SpriteSheet.tiles, 16, 16);
 	public static Sprite explosion_vertical_down_last2 = new Sprite(DEFAULT_SIZE, 3, 6, SpriteSheet.tiles, 16, 16);
 
-	public static Sprite testMoving = movingSprite(player_right , player_right_1 , player_right_2 , 60 , 1000);
+    public static Sprite [] down_last = {explosion_vertical_down_last, explosion_vertical_down_last1, explosion_vertical_down_last2};
+
+    public static Sprite testMoving = movingSprite(player_right , player_right_1 , player_right_2 , 60 , 1000);
 	/*
 	|--------------------------------------------------------------------------
 	| Brick FlameSegment
@@ -179,6 +192,7 @@ public class Sprite {
 	public static Sprite brick_exploded1 = new Sprite(DEFAULT_SIZE, 7, 2, SpriteSheet.tiles, 16, 16);
 	public static Sprite brick_exploded2 = new Sprite(DEFAULT_SIZE, 7, 3, SpriteSheet.tiles, 16, 16);
 	
+	public static Sprite [] brick_dead = {brick_exploded, brick_exploded1, brick_exploded2};
 	/*
 	|--------------------------------------------------------------------------
 	| Powerups
