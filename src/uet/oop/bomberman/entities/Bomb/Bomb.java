@@ -12,7 +12,7 @@ import java.util.List;
 public class Bomb extends AnimatedEntity {
 
     public int _timeAfter = 20; //time for explosions to disappear
-    protected double _timeToExplode = 70; //2sec in 25fps
+    protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
     public List<Image> Img = new ArrayList<>();
     public List<String> pos = new ArrayList<>();
