@@ -11,7 +11,7 @@ import java.nio.IntBuffer;
 public class Sprite {
 	
 	public static final int DEFAULT_SIZE = 16;
-	public static final int SCALED_SIZE = DEFAULT_SIZE * 2;
+	public static final int SCALED_SIZE = DEFAULT_SIZE * 3;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE;
 	private int _x, _y;
@@ -62,7 +62,7 @@ public class Sprite {
 	public static Sprite[] p_down = { player_down, player_down_1 , player_down_2 , player_down};
 	public static Sprite[] p_right = {player_right, player_right_1 , player_right_2 , player_right} ;
 	public static Sprite[] p_left = { player_left, player_left_1 , player_left_2 , player_left };
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Character

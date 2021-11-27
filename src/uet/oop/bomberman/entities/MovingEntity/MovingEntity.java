@@ -9,7 +9,7 @@ import uet.oop.bomberman.map.TileMap;
 public class MovingEntity extends AnimatedEntity {
 
     public final int tileSize = Sprite.SCALED_SIZE;
-    public final int maxFrame = 3;
+
     //SPEED
     protected float dx = 0.1f;
     protected float dy = 0;
@@ -33,8 +33,8 @@ public class MovingEntity extends AnimatedEntity {
          * HORIZONTAL.
          */
 
-        x1 = Math.round((x + dx - 16) / tileSize);
-        x2 = Math.round(x + tileSize + dx - 8) / tileSize;
+        x1 = Math.round((x + dx - 25) / tileSize);
+        x2 = Math.round(x + tileSize + dx - 8 ) / tileSize;
 
         y1 = Math.round((y + 2f) / tileSize);
         y2 = Math.round(y + tileSize - 1) / tileSize;
@@ -44,14 +44,14 @@ public class MovingEntity extends AnimatedEntity {
                 if (mapArr[y1][x2] != 0 || mapArr[y2][x2] != 0) {
                     collide = true;
                     x = x2 * tileSize;
-                    x -= tileSize - 4;
+                    x -= tileSize - 2;
                 } else {
                     collide = false;
                 }
             } else if (dx < 0) {
                 if (mapArr[y2][x1] != 0 || mapArr[y1][x1] != 0) {
                     collide = true;
-                    x = (x1 + 1) * tileSize;
+                    x = (x1 + 1) * tileSize + 8;
                 } else {
                     collide = false;
                 }

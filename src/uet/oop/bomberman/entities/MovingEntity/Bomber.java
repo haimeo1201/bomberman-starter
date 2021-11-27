@@ -21,6 +21,9 @@ public class Bomber extends MovingEntity {
     protected float maxSpeed = 3f;
     protected float acceleration = 0.8f;
     protected float deAcceleration = 0.4f;
+    public final int maxFrame = 3;
+    public boolean isMoving = false;
+    private int s_timing = 0;
 
     List<Bomb> bomb = new ArrayList();
 
@@ -33,10 +36,12 @@ public class Bomber extends MovingEntity {
     @Override
     public void update() {
         move();
+        handleSound();
         mapCheck();
         checkCollisionMap();
         doP_IMG();
         updateP_IMG();
+
     }
 
     public void input(Scene scene) {
@@ -50,76 +55,56 @@ public class Bomber extends MovingEntity {
                 p_input.setDown(event.getCode().equals(KeyCode.DOWN));
                 p_input.setLeft(event.getCode().equals(KeyCode.LEFT));
                 p_input.setRight(event.getCode().equals(KeyCode.RIGHT));
+                isMoving = true;
             }
         });
 
         scene.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.UP)) {
                 p_input.setUp(false);
-                Sound fs = new Sound();
-                try {
-                    fs.footSound();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
             }
             if (event.getCode().equals(KeyCode.DOWN)) {
                 p_input.setDown(false);
-                Sound fs = new Sound();
-                try {
-                    fs.footSound();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
             }
             if (event.getCode().equals(KeyCode.LEFT)) {
                 p_input.setLeft(false);
                 Sound fs = new Sound();
-                try {
-                    fs.footSound();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
+
             }
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 p_input.setRight(false);
-                Sound fs = new Sound();
-                try {
-                    fs.footSound();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
             }
             if (event.getCode().equals(KeyCode.SPACE)) {
                 p_input.setPlant(false);
-                Sound bs = new Sound();
+            }
+            isMoving = false;
+        });
+    }
+
+    public void handleSound() {
+        if (s_timing == 0) {
+            if (isMoving) {
+                Sound footSound = new Sound();
                 try {
-                    bs.bombSound();
-                } catch (UnsupportedAudioFileException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (LineUnavailableException e) {
+                    footSound.footSound();
+                } catch (Exception e) {
+                    System.out.println("Failed to initialize foot sound!");
                     e.printStackTrace();
                 }
+                s_timing = 10;
             }
-        });
+        } else {
+            s_timing--;
+        }
+        if (p_input.isPlant()) {
+            Sound bombSound = new Sound();
+            try {
+                bombSound.bombSound();
+            } catch (Exception e) {
+                System.out.println("Failed to initialize bomb sound");
+                e.printStackTrace();
+            }
+        }
     }
 
     public void move() {
@@ -202,9 +187,7 @@ public class Bomber extends MovingEntity {
     public void placeBomb() {
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
-        bomb.add(bom);/*
-        TileMap tile = BombermanGame.getMap1();
-        tile.update(Math.round(x / tileSize),Math.round(y / tileSize),9);*/
+        bomb.add(bom);
         BombermanGame.destroyableObjects.add(bom);
     }
 

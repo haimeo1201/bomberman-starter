@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    public static final double FPS = 25.0;
+    public static final double FPS = 30.0;
 
     //OBJ LIST
     public static final List<Entity> movableEntities = new ArrayList<>();
