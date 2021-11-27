@@ -21,6 +21,14 @@ public abstract class Entity {
         this.img = img;
     }
 
+    public float getY() {
+        return y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
     public void remove() {
         isRemoved = true;
     }

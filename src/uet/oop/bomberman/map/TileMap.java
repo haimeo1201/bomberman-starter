@@ -1,10 +1,12 @@
 package uet.oop.bomberman.map;
 
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MapEntity.*;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.game.BombermanGame;
 
 
 import java.io.BufferedReader;
@@ -68,7 +70,7 @@ public class TileMap {
         return map;
     }
 
-    public void drawMap(List<Entity> mapObjects) {
+    public void drawMap() {
         int[][] mapArr = getMap();
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
@@ -77,7 +79,9 @@ public class TileMap {
                 if (ij == 1) {
                     object = new Wall(j, i, Sprite.wall.getFxImage());
                 } else if (ij == 2) {
-                    object = new Brick(j, i, Sprite.brick.getFxImage());
+                    AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
+                    BombermanGame.destroyableObjects.add(object1);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 } else if(ij == 3) {
                     object = new Portal(j, i, Sprite.portal.getFxImage());
                 } else if(ij == 4) {
@@ -89,7 +93,7 @@ public class TileMap {
                 else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
-                mapObjects.add(object);
+                BombermanGame.stillObjects.add(object);
             }
         }
     }

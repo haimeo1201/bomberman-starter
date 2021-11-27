@@ -3,14 +3,17 @@ package uet.oop.bomberman.entities.Bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.map.TileMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends AnimatedEntity {
-
+    boolean flag = false;// push 4(possibly) new image or not
     public int _timeAfter = 20; //time for explosions to disappear
     protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
@@ -38,7 +41,9 @@ public class Bomb extends AnimatedEntity {
             if (!_exploded) {
                 explosion();
             }
-            else updateExplosion();
+            else{
+                if(!flag) updateExplosion();
+            }
 
             if (_timeAfter > 0)
                 _timeAfter--;
@@ -76,11 +81,25 @@ public class Bomb extends AnimatedEntity {
         }
     }
 
-    public void push(Sprite[] sprites, String Pos) {
+    public void shrapnel_collision(Sprite[] sprites, String Pos, int dx,int dy) {
+        for(AnimatedEntity e:BombermanGame.destroyableObjects){
+            if(x + dx == e.getX() && y + dy == e.getY()){
+                e.blown();
+                BombermanGame.getMap1().update((Math.round((y + dy)/Sprite.SCALED_SIZE)) , Math.round((x + dx)/Sprite.SCALED_SIZE), 0 );
+                return;
+            }
+        }
+        for(Entity e:BombermanGame.stillObjects){
+            if(x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return;
+        }
+        for(MovingEntity e:BombermanGame.movableEntities){
+            if((x + dx) - e.getX() < 0.001  && (y + dy) - e.getY() < 0.001){
+                e.killed();
+            }
+        }
         pos.add(Pos);
         state.add(sprites);
         Img.add(sprites[0].getFxImage());
-
     }
 
     private void explosion() {
@@ -92,14 +111,13 @@ public class Bomb extends AnimatedEntity {
     }
 
     public void updateExplosion() {
+        flag = true;
         state.set(0, Sprite.bombs_ex);
         Img.set(0, Sprite.bombs_ex[0].getFxImage());
-        push(Sprite.right_last, "right");
-        push(Sprite.left_last, "left");
-        push(Sprite.top_last, "top");
-        push(Sprite.down_last, "down");
-
+        shrapnel_collision(Sprite.right_last, "right",Sprite.SCALED_SIZE,0);
+        shrapnel_collision(Sprite.left_last, "left",- Sprite.SCALED_SIZE,0);
+        shrapnel_collision(Sprite.top_last, "top",0, -Sprite.SCALED_SIZE);
+        shrapnel_collision(Sprite.down_last, "down",0, Sprite.SCALED_SIZE);
     }
-
 
 }

@@ -58,10 +58,10 @@ public class Sprite {
 
 	public static Sprite [] dead = {player_dead1, player_dead2, player_dead3};
 
-	public static Sprite[] p_up = {player_up, player_up_1 , player_up_2 , player_up} ;
-	public static Sprite[] p_down = { player_down, player_down_1 , player_down_2 , player_down};
-	public static Sprite[] p_right = {player_right, player_right_1 , player_right_2 , player_right} ;
-	public static Sprite[] p_left = { player_left, player_left_1 , player_left_2 , player_left };
+	public static Sprite[] p_up = {player_up, player_up_1 , player_up_2 } ;
+	public static Sprite[] p_down = { player_down, player_down_1 , player_down_2 };
+	public static Sprite[] p_right = {player_right, player_right_1 , player_right_2 } ;
+	public static Sprite[] p_left = { player_left, player_left_1 , player_left_2 };
 
 	/*
 	|--------------------------------------------------------------------------
@@ -73,13 +73,13 @@ public class Sprite {
 	public static Sprite balloom_left2 = new Sprite(DEFAULT_SIZE, 9, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left3 = new Sprite(DEFAULT_SIZE, 9, 2, SpriteSheet.tiles, 16, 16);
 
-	public static Sprite[] balloom_left = {balloom_left1, balloom_left2, balloom_left3, balloom_left1 };
+	public static Sprite[] balloom_left = {balloom_left1, balloom_left2, balloom_left3 };
 
 	public static Sprite balloom_right1 = new Sprite(DEFAULT_SIZE, 10, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right2 = new Sprite(DEFAULT_SIZE, 10, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right3 = new Sprite(DEFAULT_SIZE, 10, 2, SpriteSheet.tiles, 16, 16);
 
-	public static Sprite[] balloom_right = {balloom_right1, balloom_right2, balloom_right3, balloom_right1 };
+	public static Sprite[] balloom_right = {balloom_right1, balloom_right2, balloom_right3 };
 
 	public static Sprite balloom_dead = new Sprite(DEFAULT_SIZE, 9, 3, SpriteSheet.tiles, 16, 16);
 	

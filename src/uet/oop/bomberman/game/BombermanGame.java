@@ -7,9 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.Enemy.Balloom;
+import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
 
@@ -21,9 +23,9 @@ public class BombermanGame extends Application {
     public static final double FPS = 30.0;
 
     //OBJ LIST
-    public static final List<Entity> movableEntities = new ArrayList<>();
+    public static final List<MovingEntity> movableEntities = new ArrayList<>();
     public static final List<Entity> stillObjects = new ArrayList<>();
-    public static final List<Entity> destroyableObjects = new ArrayList<>();
+    public static final List<AnimatedEntity> destroyableObjects = new ArrayList<>();
     ///** ADD CHOOSE MAP IN GUI **\\\
     public static TileMap map1 = new TileMap("res/levels/map1.txt");
     public static final int WIDTH = map1.getMapWidth();
@@ -84,7 +86,7 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        map1.drawMap(stillObjects);
+        map1.drawMap();
         movableEntities.add(bomberman);
         movableEntities.add(enemy);
     }

@@ -9,7 +9,7 @@ import uet.oop.bomberman.map.TileMap;
 public class MovingEntity extends AnimatedEntity {
 
     public final int tileSize = Sprite.SCALED_SIZE;
-
+    public boolean alive;
     //SPEED
     protected float dx = 0.1f;
     protected float dy = 0;
@@ -18,6 +18,10 @@ public class MovingEntity extends AnimatedEntity {
 
     public MovingEntity(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        alive = true;
+    }
+    public void killed(){
+        alive = false;
     }
 
     public void mapCheck() {

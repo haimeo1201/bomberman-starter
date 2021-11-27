@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bomber extends MovingEntity {
-
+    public int _timeAfter = 20; //time for explosions to disappear
     protected float maxSpeed = 3f;
     protected float acceleration = 0.8f;
     protected float deAcceleration = 0.4f;
-    public final int maxFrame = 3;
+    public final int maxFrame = 2;
     public boolean isMoving = false;
     private int s_timing = 0;
 
@@ -35,6 +35,11 @@ public class Bomber extends MovingEntity {
 
     @Override
     public void update() {
+        if(!alive){
+            doP_IMG();
+            updateP_IMG();
+            return;
+        }
         move();
         handleSound();
         mapCheck();
@@ -170,6 +175,13 @@ public class Bomber extends MovingEntity {
     }
 
     public void updateP_IMG() {
+        if(!alive){
+            if(currFrame == 2){
+                remove();
+                return;
+            }
+            setImg(Sprite.dead[currFrame].getFxImage());
+        }
         if (p_input.isUp()) {
             setImg(Sprite.p_up[currFrame].getFxImage());
         }
@@ -185,6 +197,9 @@ public class Bomber extends MovingEntity {
     }
 
     public void placeBomb() {
+        for(Bomb b:bomb){
+            if(!b.is_exploded()) return;
+        }
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
         bomb.add(bom);

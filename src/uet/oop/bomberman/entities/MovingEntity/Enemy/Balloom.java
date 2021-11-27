@@ -68,6 +68,10 @@ public class Balloom extends MovingEntity {
 
     @Override
     public void update() {
+        if(!alive){
+            System.out.println(1);
+            setImg(Sprite.balloom_dead.getFxImage());
+        }
         startEnemy();
         move();
         animate();
