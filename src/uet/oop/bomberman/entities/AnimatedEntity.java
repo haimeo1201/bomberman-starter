@@ -11,6 +11,7 @@ public class AnimatedEntity extends Entity {
         super(xUnit, yUnit, img);
     }
 
+
     public void blown(){
         destroyed = true;
     }

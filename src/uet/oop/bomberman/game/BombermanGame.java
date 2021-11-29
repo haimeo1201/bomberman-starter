@@ -98,6 +98,10 @@ public class BombermanGame extends Application {
             if (a.isRemoved()) destroyableObjects.remove(i);
         }
         movableEntities.forEach(Entity::update);
+        for (int i = 0; i < movableEntities.size(); i++) {
+            Entity a = movableEntities.get(i);
+            if (a.isRemoved()) movableEntities.remove(i);
+        }
     }
 
     public void render() {

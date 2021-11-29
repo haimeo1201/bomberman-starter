@@ -22,11 +22,11 @@ public abstract class Entity {
     }
 
     public float getY() {
-        return y;
+        return this.y;
     }
 
     public float getX() {
-        return x;
+        return this.x;
     }
 
     public void remove() {

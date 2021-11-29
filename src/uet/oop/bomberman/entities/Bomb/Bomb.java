@@ -7,7 +7,6 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.map.TileMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +92,10 @@ public class Bomb extends AnimatedEntity {
             if(x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return;
         }
         for(MovingEntity e:BombermanGame.movableEntities){
-            if((x + dx) - e.getX() < 0.001  && (y + dy) - e.getY() < 0.001){
+            if(Math.round(x + dx) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y + dy) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+                e.killed();
+            }
+            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
                 e.killed();
             }
         }

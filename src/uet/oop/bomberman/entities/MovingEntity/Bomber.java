@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.MovingEntity;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
@@ -29,12 +30,21 @@ public class Bomber extends MovingEntity {
 
     protected Input p_input = new Input();
 
-    public Bomber(int x, int y, Image img) {
-        super(x, y, img);
+    public Bomber(int xUnit, int yUnit, Image img) {
+        super(xUnit, yUnit, img);
+        x = xUnit*Sprite.SCALED_SIZE;
+        y = yUnit*Sprite.SCALED_SIZE;
     }
+
 
     @Override
     public void update() {
+        for(int i=1;i< BombermanGame.movableEntities.size();i++){
+            AnimatedEntity e = BombermanGame.movableEntities.get(i);
+            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+                killed();
+            }
+        }
         if(!alive){
             doP_IMG();
             updateP_IMG();
@@ -43,10 +53,8 @@ public class Bomber extends MovingEntity {
         move();
         handleSound();
         mapCheck();
-        checkCollisionMap();
         doP_IMG();
         updateP_IMG();
-
     }
 
     public void input(Scene scene) {
@@ -176,7 +184,9 @@ public class Bomber extends MovingEntity {
 
     public void updateP_IMG() {
         if(!alive){
-            if(currFrame == 2){
+            if (_timeAfter > 0)
+                _timeAfter--;
+            else {
                 remove();
                 return;
             }

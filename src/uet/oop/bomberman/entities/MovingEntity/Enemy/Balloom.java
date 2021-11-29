@@ -11,6 +11,7 @@ public class Balloom extends MovingEntity {
 
     protected float maxSpeed = 2f;
     protected float acceleration = 0.4f;
+    public int _timeAfter = 20;
 
     public Balloom(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -69,8 +70,14 @@ public class Balloom extends MovingEntity {
     @Override
     public void update() {
         if(!alive){
-            System.out.println(1);
+            if (_timeAfter > 0)
+                _timeAfter--;
+            else {
+                remove();
+                return;
+            }
             setImg(Sprite.balloom_dead.getFxImage());
+            return;
         }
         startEnemy();
         move();
