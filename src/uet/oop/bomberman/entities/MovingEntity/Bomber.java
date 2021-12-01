@@ -32,10 +32,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-        x = xUnit*Sprite.SCALED_SIZE;
-        y = yUnit*Sprite.SCALED_SIZE;
     }
-
 
     @Override
     public void update() {
@@ -45,13 +42,13 @@ public class Bomber extends MovingEntity {
                 killed();
             }
         }
-        if(!alive){
+        if (!alive) {
             doP_IMG();
             updateP_IMG();
             return;
         }
         move();
-        handleSound();
+        //handleSound();
         mapCheck();
         doP_IMG();
         updateP_IMG();
@@ -81,8 +78,6 @@ public class Bomber extends MovingEntity {
             }
             if (event.getCode().equals(KeyCode.LEFT)) {
                 p_input.setLeft(false);
-                Sound fs = new Sound();
-
             }
             if (event.getCode().equals(KeyCode.RIGHT)) {
                 p_input.setRight(false);
@@ -108,15 +103,6 @@ public class Bomber extends MovingEntity {
             }
         } else {
             s_timing--;
-        }
-        if (p_input.isPlant()) {
-            Sound bombSound = new Sound();
-            try {
-                bombSound.bombSound();
-            } catch (Exception e) {
-                System.out.println("Failed to initialize bomb sound");
-                e.printStackTrace();
-            }
         }
     }
 
@@ -183,7 +169,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void updateP_IMG() {
-        if(!alive){
+        if (!alive) {
             if (_timeAfter > 0)
                 _timeAfter--;
             else {
@@ -207,11 +193,12 @@ public class Bomber extends MovingEntity {
     }
 
     public void placeBomb() {
-        for(Bomb b:bomb){
-            if(!b.is_exploded()) return;
+        for (Bomb b : bomb) {
+            if (!b.is_exploded()) return;
         }
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
+        //bom.handleSound();
         bomb.add(bom);
         BombermanGame.destroyableObjects.add(bom);
     }

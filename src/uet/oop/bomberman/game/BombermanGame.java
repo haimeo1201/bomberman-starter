@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.Enemy.Balloom;
+import uet.oop.bomberman.entities.MovingEntity.Enemy.Oneal;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    public static final double FPS = 30.0;
+    public static final double FPS = 24;
 
     //OBJ LIST
     public static final List<MovingEntity> movableEntities = new ArrayList<>();
@@ -63,7 +64,14 @@ public class BombermanGame extends Application {
         bomberman.input(scene);
 
         //ENEMY
-        Balloom enemy = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
+        Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
+        Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
+        Balloom balloom3 = new Balloom(24, 5, Sprite.balloom_left1.getFxImage());
+
+        Oneal oneal1 = new Oneal(17 , 1 , Sprite.oneal_left1.getFxImage());
+        Oneal oneal2 = new Oneal(24 , 3 , Sprite.oneal_left1.getFxImage());
+        Oneal oneal3 = new Oneal(26 , 11 , Sprite.oneal_left1.getFxImage());
+        Oneal oneal4 = new Oneal(11 , 7 , Sprite.oneal_left1.getFxImage());
 
         //TIMER
         AnimationTimer timer = new AnimationTimer() {
@@ -88,7 +96,14 @@ public class BombermanGame extends Application {
 
         map1.drawMap();
         movableEntities.add(bomberman);
-        movableEntities.add(enemy);
+        movableEntities.add(balloom1);
+        movableEntities.add(balloom2);
+        movableEntities.add(balloom3);
+
+        movableEntities.add(oneal1);
+        movableEntities.add(oneal2);
+        movableEntities.add(oneal3);
+        movableEntities.add(oneal4);
     }
 
     public void update() {

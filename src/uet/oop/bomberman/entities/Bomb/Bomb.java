@@ -7,18 +7,20 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends AnimatedEntity {
     boolean flag = false;// push 4(possibly) new image or not
-    public int _timeAfter = 20; //time for explosions to disappear
+    public int _timeAfter = 30; //time for explosions to disappear
     protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
     public List<Image> Img = new ArrayList<>();
     public List<String> pos = new ArrayList<>();
     public List<Sprite[]> state = new ArrayList<>();
+    Sound bombSound = new Sound();
 
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -34,18 +36,23 @@ public class Bomb extends AnimatedEntity {
 
     @Override
     public void update() {
-        if (_timeToExplode > 0)
+        if (_timeToExplode > 0) {
             _timeToExplode--;
+        }
         else {
             if (!_exploded) {
                 explosion();
-            }
-            else{
-                if(!flag) updateExplosion();
+            } else {
+                if (!flag) updateExplosion();
             }
 
-            if (_timeAfter > 0)
+            if (_timeAfter > 0) {
                 _timeAfter--;
+                shrapnel_collision(Sprite.right_last, "right", Sprite.SCALED_SIZE, 0);
+                shrapnel_collision(Sprite.left_last, "left", -Sprite.SCALED_SIZE, 0);
+                shrapnel_collision(Sprite.top_last, "top", 0, -Sprite.SCALED_SIZE);
+                shrapnel_collision(Sprite.down_last, "down", 0, Sprite.SCALED_SIZE);
+            }
             else {
                 remove();
             }
@@ -56,7 +63,15 @@ public class Bomb extends AnimatedEntity {
         for (int i = 0; i < pos.size(); i++) {
             Img.set(i, Sprite.movingSprite(state.get(i)[0], state.get(i)[1], state.get(i)[2], _animate, 90).getFxImage());
         }
+    }
 
+    public void handleSound(){
+        try {
+            bombSound.bombSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bomb sound failed!");
+        }
     }
 
     @Override
@@ -80,25 +95,28 @@ public class Bomb extends AnimatedEntity {
         }
     }
 
-    public void shrapnel_collision(Sprite[] sprites, String Pos, int dx,int dy) {
-        for(AnimatedEntity e:BombermanGame.destroyableObjects){
-            if(x + dx == e.getX() && y + dy == e.getY()){
+    public void shrapnel_collision(Sprite[] sprites, String Pos, int dx, int dy) {
+        for (AnimatedEntity e : BombermanGame.destroyableObjects) {
+            if (x + dx == e.getX() && y + dy == e.getY()) {
                 e.blown();
-                BombermanGame.getMap1().update((Math.round((y + dy)/Sprite.SCALED_SIZE)) , Math.round((x + dx)/Sprite.SCALED_SIZE), 0 );
+                BombermanGame.getMap1().update((Math.round((y + dy) / Sprite.SCALED_SIZE)), Math.round((x + dx) / Sprite.SCALED_SIZE), 0);
                 return;
             }
         }
-        for(Entity e:BombermanGame.stillObjects){
-            if(x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return;
+        for (Entity e : BombermanGame.stillObjects) {
+            if (x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return;
         }
-        for(MovingEntity e:BombermanGame.movableEntities){
-            if(Math.round(x + dx) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y + dy) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+        for (MovingEntity e : BombermanGame.movableEntities) {
+            if (Math.round(x + dx) == Math.round(e.getX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE
+                    && Math.round(y + dy) == Math.round(e.getY() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE) {
                 e.killed();
             }
-            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+            if (Math.round(x) == Math.round(e.getX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE
+                    && Math.round(y) == Math.round(e.getY() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE) {
                 e.killed();
             }
         }
+
         pos.add(Pos);
         state.add(sprites);
         Img.add(sprites[0].getFxImage());
@@ -116,10 +134,10 @@ public class Bomb extends AnimatedEntity {
         flag = true;
         state.set(0, Sprite.bombs_ex);
         Img.set(0, Sprite.bombs_ex[0].getFxImage());
-        shrapnel_collision(Sprite.right_last, "right",Sprite.SCALED_SIZE,0);
-        shrapnel_collision(Sprite.left_last, "left",- Sprite.SCALED_SIZE,0);
-        shrapnel_collision(Sprite.top_last, "top",0, -Sprite.SCALED_SIZE);
-        shrapnel_collision(Sprite.down_last, "down",0, Sprite.SCALED_SIZE);
+        shrapnel_collision(Sprite.right_last, "right", Sprite.SCALED_SIZE, 0);
+        shrapnel_collision(Sprite.left_last, "left", -Sprite.SCALED_SIZE, 0);
+        shrapnel_collision(Sprite.top_last, "top", 0, -Sprite.SCALED_SIZE);
+        shrapnel_collision(Sprite.down_last, "down", 0, Sprite.SCALED_SIZE);
     }
 
 }

@@ -13,7 +13,7 @@ public class MovingEntity extends AnimatedEntity {
     public boolean alive;
     //SPEED
     protected float dx = 0.1f;
-    protected float dy = 0;
+    protected float dy = 0f;
     protected boolean collide = false;
     protected int currFrame = 0;
 
@@ -112,6 +112,10 @@ public class MovingEntity extends AnimatedEntity {
 
     public void setDx(float dx) {
         this.dx = dx;
+    }
+
+    public void setDy(float dy) {
+        this.dy = dy;
     }
 
     @Override
