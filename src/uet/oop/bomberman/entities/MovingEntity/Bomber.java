@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
@@ -40,7 +41,7 @@ public class Bomber extends MovingEntity {
     }
 
     public boolean boomupnum = false;
-    public int boomleft = 1;
+    public int boomleft = 2;
 
     List<Bomb> bomb = new ArrayList();
 
@@ -54,9 +55,14 @@ public class Bomber extends MovingEntity {
     public void update() {
         for(int i=1;i< BombermanGame.movableEntities.size();i++){
             AnimatedEntity e = BombermanGame.movableEntities.get(i);
-            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE
+                    && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
                 killed();
             }
+        }
+        for (int i = 0; i < bomb.size(); i++) {
+            Bomb a = bomb.get(i);
+            if (a.isRemoved()) bomb.remove(i);
         }
         if (!alive) {
             doP_IMG();
@@ -210,9 +216,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void placeBomb() {
-        for (Bomb b : bomb) {
-            if (!b.is_exploded()) return;
-        }
+        if(bomb.size() == boomleft) return;
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
         //bom.handleSound();

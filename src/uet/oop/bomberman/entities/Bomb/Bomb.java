@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Bomb extends AnimatedEntity {
     boolean flag = false;// push 4(possibly) new image or not
-    public int _timeAfter = 30; //time for explosions to disappear
+    public int _timeAfter = 20; //time for explosions to disappear
     protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
     public List<Image> Img = new ArrayList<>();
@@ -48,10 +48,6 @@ public class Bomb extends AnimatedEntity {
 
             if (_timeAfter > 0) {
                 _timeAfter--;
-                shrapnel_collision(Sprite.right_last, "right", Sprite.SCALED_SIZE, 0);
-                shrapnel_collision(Sprite.left_last, "left", -Sprite.SCALED_SIZE, 0);
-                shrapnel_collision(Sprite.top_last, "top", 0, -Sprite.SCALED_SIZE);
-                shrapnel_collision(Sprite.down_last, "down", 0, Sprite.SCALED_SIZE);
             }
             else {
                 remove();
