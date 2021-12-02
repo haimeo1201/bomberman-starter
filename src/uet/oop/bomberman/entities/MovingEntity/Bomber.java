@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
@@ -19,12 +20,28 @@ import java.util.List;
 
 public class Bomber extends MovingEntity {
     public int _timeAfter = 20; //time for explosions to disappear
+
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
     protected float maxSpeed = 3f;
     protected float acceleration = 0.8f;
     protected float deAcceleration = 0.4f;
     public final int maxFrame = 2;
     public boolean isMoving = false;
     private int s_timing = 0;
+
+    public void setBoomupnum(boolean boomupnum) {
+        this.boomupnum = boomupnum;
+    }
+
+    public void setBoomleft(int boomleft) {
+        this.boomleft = boomleft;
+    }
+
+    public boolean boomupnum = false;
+    public int boomleft = 2;
 
     List<Bomb> bomb = new ArrayList();
 
@@ -38,9 +55,14 @@ public class Bomber extends MovingEntity {
     public void update() {
         for(int i=1;i< BombermanGame.movableEntities.size();i++){
             AnimatedEntity e = BombermanGame.movableEntities.get(i);
-            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE   && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE
+                    && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
                 killed();
             }
+        }
+        for (int i = 0; i < bomb.size(); i++) {
+            Bomb a = bomb.get(i);
+            if (a.isRemoved()) bomb.remove(i);
         }
         if (!alive) {
             doP_IMG();
@@ -50,6 +72,7 @@ public class Bomber extends MovingEntity {
         move();
         //handleSound();
         mapCheck();
+        checkitem();
         doP_IMG();
         updateP_IMG();
     }
@@ -193,9 +216,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void placeBomb() {
-        for (Bomb b : bomb) {
-            if (!b.is_exploded()) return;
-        }
+        if(bomb.size() == boomleft) return;
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
         //bom.handleSound();
@@ -203,6 +224,15 @@ public class Bomber extends MovingEntity {
         BombermanGame.destroyableObjects.add(bom);
     }
 
+    public void checkitem() {
+        for (AnimatedEntity e : BombermanGame.destroyableObjects) {
+            if (x + 48 == e.getX() && y == e.getY() && e.getClass().getName().contains("Brick")) {
+                System.out.println(1);
+                e.blown();
+                return;
+            }
+        }
+    }
 }
 
 

@@ -13,6 +13,7 @@ import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.Enemy.*;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.item.Item;
 import uet.oop.bomberman.map.TileMap;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class BombermanGame extends Application {
     public static final int HEIGHT = map1.getMapHeight();
     private GraphicsContext gc;
     private Canvas canvas;
+    public static final Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    public static final List<Item> items = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -59,7 +62,6 @@ public class BombermanGame extends Application {
         stage.show();
 
         //BOMBER
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         bomberman.input(scene);
 
         //ENEMY
@@ -130,6 +132,11 @@ public class BombermanGame extends Application {
             Entity a = movableEntities.get(i);
             if (a.isRemoved()) movableEntities.remove(i);
         }
+        items.forEach(Entity::update);
+        for (int i = 0; i < items.size(); i++) {
+            Entity a = items.get(i);
+            if (a.isRemoved()) items.remove(i);
+        }
     }
 
     public void render() {
@@ -137,5 +144,6 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         destroyableObjects.forEach(g -> g.render(gc));
         movableEntities.forEach(g -> g.render(gc));
+        items.forEach(g -> g.render(gc));
     }
 }
