@@ -9,58 +9,60 @@ public class Doll extends MovingEntity {
 
     protected Input e_input = new Input();
 
-    protected float maxSpeed = 10f;
-    protected float acceleration = 1f;
+    protected float maxSpeed = 2f;
+    protected float acceleration = 0.4f;
     public int _timeAfter = 20;
 
     public Doll(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+        this.dy = 0.01f;
+        this.dx = 0f;
     }
 
     public void input() {
-        if (dx > 0) {
-            e_input.setRight(true);
-            e_input.setLeft(false);
-        } else if (dx < 0) {
-            e_input.setRight(false);
-            e_input.setLeft(true);
+        if (dy > 0) {
+            e_input.setUp(true);
+            e_input.setDown(false);
+        } else if (dy < 0) {
+            e_input.setUp(false);
+            e_input.setDown(true);
         } else {
-            e_input.setLeft(false);
-            e_input.setRight(false);
+            e_input.setUp(false);
+            e_input.setDown(false);
         }
     }
 
     public void startEnemy() {
-        if (e_input.isRight() && isCollide()) {
-            setDx(-1f);
-        } else if (e_input.isLeft() && isCollide()) {
-            setDx(1f);
+        if (e_input.isUp() && isCollide()) {
+            setDy(-1f);
+        } else if (e_input.isDown() && isCollide()) {
+            setDy(1f);
         }
         input();
     }
 
     public void move() {
-        if (e_input.isLeft()) {
-            dx -= acceleration;
-            if (dx < -maxSpeed) {
-                dx = -maxSpeed;
+        if (e_input.isDown()) {
+            dy -= acceleration;
+            if (dy < -maxSpeed) {
+                dy = -maxSpeed;
             }
         }
-        if (e_input.isRight()) {
-            dx += acceleration;
-            if (dx > maxSpeed) {
-                dx = maxSpeed;
+        if (e_input.isUp()) {
+            dy += acceleration;
+            if (dy > maxSpeed) {
+                dy = maxSpeed;
             }
         }
     }
 
     public void updateE_IMG() {
-        if (e_input.isRight()) {
+        if (e_input.isUp()) {
             Image i = Sprite.movingSprite(Sprite.doll_right1, Sprite.doll_right2
                     , Sprite.doll_right3, _animate, 20).getFxImage();
             setImg(i);
         }
-        if (e_input.isLeft()) {
+        if (e_input.isDown()) {
             Image i = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2
                     , Sprite.doll_left3, _animate, 20).getFxImage();
             setImg(i);

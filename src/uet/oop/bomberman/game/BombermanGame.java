@@ -10,10 +10,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovingEntity.Bomber;
-import uet.oop.bomberman.entities.MovingEntity.Enemy.Balloom;
-import uet.oop.bomberman.entities.MovingEntity.Enemy.Doll;
-import uet.oop.bomberman.entities.MovingEntity.Enemy.Minvo;
-import uet.oop.bomberman.entities.MovingEntity.Enemy.Oneal;
+import uet.oop.bomberman.entities.MovingEntity.Enemy.*;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.map.TileMap;
@@ -72,12 +69,15 @@ public class BombermanGame extends Application {
 
         //Oneal oneal1 = new Oneal(17 , 1 , Sprite.oneal_left1.getFxImage());
         Oneal oneal2 = new Oneal(24 , 3 , Sprite.oneal_left1.getFxImage());
-        Oneal oneal3 = new Oneal(26 , 11 , Sprite.oneal_left1.getFxImage());
+        //Oneal oneal3 = new Oneal(26 , 11 , Sprite.oneal_left1.getFxImage());
         Oneal oneal4 = new Oneal(11 , 7 , Sprite.oneal_left1.getFxImage());
 
-        Doll doll1 = new Doll(24, 5, Sprite.doll_left1.getFxImage());
+        Doll doll1 = new Doll(27, 5, Sprite.doll_left1.getFxImage());
 
         Minvo minvo1 = new Minvo(17 , 1 , Sprite.minvo_left1.getFxImage());
+        Minvo minvo2 = new Minvo(26 , 11 , Sprite.minvo_left1.getFxImage());
+
+        Kondoria kondoria1 = new Kondoria(5 , 11 , Sprite.minvo_left1.getFxImage());
 
         //TIMER
         AnimationTimer timer = new AnimationTimer() {
@@ -108,12 +108,15 @@ public class BombermanGame extends Application {
 
         //movableEntities.add(oneal1);
         movableEntities.add(oneal2);
-        movableEntities.add(oneal3);
+        //movableEntities.add(oneal3);
         movableEntities.add(oneal4);
 
         movableEntities.add(doll1);
 
         movableEntities.add(minvo1);
+        movableEntities.add(minvo2);
+
+        movableEntities.add(kondoria1);
     }
 
     public void update() {
