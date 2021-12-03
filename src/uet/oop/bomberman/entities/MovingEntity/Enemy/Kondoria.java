@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 public class Kondoria extends MovingEntity {
 
@@ -12,6 +13,7 @@ public class Kondoria extends MovingEntity {
     protected float maxSpeed = 6f;
     protected float acceleration = 0.4f;
     public int _timeAfter = 20;
+    Sound sound = new Sound();
 
     public Kondoria(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -123,6 +125,7 @@ public class Kondoria extends MovingEntity {
                 _timeAfter--;
             else {
                 remove();
+                handleSound();
                 return;
             }
             setImg(Sprite.kondoria_dead.getFxImage());
@@ -135,5 +138,13 @@ public class Kondoria extends MovingEntity {
         updateE_IMG();
     }
 
+    public void handleSound(){
+        try {
+            sound.enemydieSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("enemydie sound failed!");
+        }
+    }
 }
 

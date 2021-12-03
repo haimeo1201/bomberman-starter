@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 import java.util.Random;
 
@@ -16,6 +17,7 @@ public class Oneal extends MovingEntity {
     public int _timeAfter = 20;
 
     int state = 1;
+    Sound sound = new Sound();
 
 
     public Oneal(int xUnit, int yUnit, Image img) {
@@ -108,6 +110,7 @@ public class Oneal extends MovingEntity {
                 _timeAfter--;
             else {
                 remove();
+                handleSound();
                 return;
             }
             setImg(Sprite.oneal_dead.getFxImage());
@@ -119,5 +122,12 @@ public class Oneal extends MovingEntity {
         mapCheck();
         updateE_IMG();
     }
-
+    public void handleSound(){
+            try {
+                sound.enemydieSound();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("enemydie sound failed!");
+            }
+    }
 }

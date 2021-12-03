@@ -70,7 +70,7 @@ public class Bomber extends MovingEntity {
             return;
         }
         move();
-        //handleSound();
+        handleSound();
         mapCheck();
         checkitem();
         doP_IMG();
@@ -197,6 +197,7 @@ public class Bomber extends MovingEntity {
                 _timeAfter--;
             else {
                 remove();
+                bomberdieSound();
                 return;
             }
             setImg(Sprite.dead[currFrame].getFxImage());
@@ -219,7 +220,7 @@ public class Bomber extends MovingEntity {
         if(bomb.size() == boomleft) return;
         Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
                 , Sprite.bomb.getFxImage());
-        //bom.handleSound();
+        bom.handleSound();
         bomb.add(bom);
         BombermanGame.destroyableObjects.add(bom);
     }
@@ -231,6 +232,15 @@ public class Bomber extends MovingEntity {
                 e.blown();
                 return;
             }
+        }
+    }
+    public void bomberdieSound(){
+        Sound sound = new Sound();
+        try {
+            sound.bomberdieSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("bomberdie sound failed!");
         }
     }
 }
