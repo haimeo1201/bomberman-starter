@@ -32,13 +32,13 @@ public class Kondoria extends MovingEntity {
         } else if (dy < 0 && dx == 0f) {
             e_input.setLeft(false);
             e_input.setRight(false);
-            e_input.setUp(false);
-            e_input.setDown(true);
+            e_input.setUp(true);
+            e_input.setDown(false);
         } else if (dy > 0 && dx == 0f) {
             e_input.setLeft(false);
             e_input.setRight(false);
-            e_input.setUp(true);
-            e_input.setDown(false);
+            e_input.setUp(false);
+            e_input.setDown(true);
         } else {
             e_input.setLeft(false);
             e_input.setRight(false);
@@ -50,17 +50,18 @@ public class Kondoria extends MovingEntity {
     public void startEnemy() {
         if (e_input.isRight() && isCollide()) {
             setDx(0f);
-            setDy(1f);
+            setDy(-1f);
         } else if (e_input.isLeft() && isCollide()) {
             setDx(1f);
             setDy(0f);
         } else if (e_input.isUp() && isCollide()) {
             setDx(0f);
-            setDy(-1f);
+            setDy(1f);
         } else if (e_input.isDown() && isCollide()) {
             setDx(-1f);
-            setDy(0);
+            setDy(0f);
         }
+
         input();
     }
 
@@ -78,15 +79,16 @@ public class Kondoria extends MovingEntity {
             }
         }
         if (e_input.isUp()) {
-            dy += acceleration;
-            if (dy > maxSpeed) {
-                dy = maxSpeed;
-            }
-        }
-        if (e_input.isDown()) {
             dy -= acceleration;
             if (dy < -maxSpeed) {
                 dy = -maxSpeed;
+            }
+        }
+        if (e_input.isDown()) {
+
+            dy += acceleration;
+            if (dy > maxSpeed) {
+                dy = maxSpeed;
             }
         }
     }

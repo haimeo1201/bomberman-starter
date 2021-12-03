@@ -21,11 +21,11 @@ public class Doll extends MovingEntity {
 
     public void input() {
         if (dy > 0) {
-            e_input.setUp(true);
-            e_input.setDown(false);
-        } else if (dy < 0) {
             e_input.setUp(false);
             e_input.setDown(true);
+        } else if (dy < 0) {
+            e_input.setUp(true);
+            e_input.setDown(false);
         } else {
             e_input.setUp(false);
             e_input.setDown(false);
@@ -33,22 +33,22 @@ public class Doll extends MovingEntity {
     }
 
     public void startEnemy() {
-        if (e_input.isUp() && isCollide()) {
+        if (e_input.isDown() && isCollide()) {
             setDy(-1f);
-        } else if (e_input.isDown() && isCollide()) {
+        } else if (e_input.isUp() && isCollide()) {
             setDy(1f);
         }
         input();
     }
 
     public void move() {
-        if (e_input.isDown()) {
+        if (e_input.isUp()) {
             dy -= acceleration;
             if (dy < -maxSpeed) {
                 dy = -maxSpeed;
             }
         }
-        if (e_input.isUp()) {
+        if (e_input.isDown()) {
             dy += acceleration;
             if (dy > maxSpeed) {
                 dy = maxSpeed;
