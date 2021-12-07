@@ -55,8 +55,8 @@ public class Bomber extends MovingEntity {
     public void update() {
         for(int i=1;i< BombermanGame.movableEntities.size();i++){
             AnimatedEntity e = BombermanGame.movableEntities.get(i);
-            if(Math.round(x) == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE
-                    && Math.round(y) == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
+            if(Math.round(x/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE == Math.round(e.getX()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE &&
+                    Math.round(y/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE == Math.round(e.getY()/Sprite.SCALED_SIZE)*Sprite.SCALED_SIZE ){
                 killed();
             }
         }
