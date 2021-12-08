@@ -2,12 +2,14 @@ package uet.oop.bomberman.map;
 
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.AnimatedEntity;
-import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MapEntity.*;
+import uet.oop.bomberman.entities.MapEntity.item.BombItem;
+import uet.oop.bomberman.entities.MapEntity.item.FlameItem;
+import uet.oop.bomberman.entities.MapEntity.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.game.BombermanGame;
-import uet.oop.bomberman.item.Item;
+import uet.oop.bomberman.entities.MapEntity.item.Item;
 
 
 import java.io.BufferedReader;
@@ -90,22 +92,25 @@ public class TileMap {
                    // BombermanGame.items.add(speed);
                     //AnimatedEntity flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
                     //BombermanGame.destroyableObjects.add(flame);
-                    AnimatedEntity speed = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
-                    BombermanGame.destroyableObjects.add(speed);
+                    Item speed = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+                    AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
+                    BombermanGame.destroyableObjects.add(object1);
+                    BombermanGame.items.add(speed);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 else if(ij == 5) {
-                    AnimatedEntity flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                    BombermanGame.destroyableObjects.add(flame);
+                    Item flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+                    AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
+                    BombermanGame.destroyableObjects.add(object1);
+                    BombermanGame.items.add(flame);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 else if(ij == 6) {
-                    AnimatedEntity bombitem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
-                    BombermanGame.destroyableObjects.add(bombitem);
+                    Item bombitem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
+                    AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
+                    BombermanGame.destroyableObjects.add(object1);
+                    BombermanGame.items.add(bombitem);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
-                }
-                else if(ij == 9){
-                    object = new Bomb(j, i, Sprite.bomb.getFxImage());
                 }
                 else {
                     object = new Grass(j, i, Sprite.grass.getFxImage());

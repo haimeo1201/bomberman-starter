@@ -1,16 +1,14 @@
-package uet.oop.bomberman.entities.MapEntity;
+package uet.oop.bomberman.entities.MapEntity.item;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.AnimatedEntity;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.sound.Sound;
 
-public class BombItem extends AnimatedEntity {
+public class SpeedItem extends Item {
     Sound sound = new Sound();
-    public BombItem(int x, int y, Image img) {
+
+    public SpeedItem(int x, int y, Image img) {
         super(x, y, img);
     }
 
@@ -18,8 +16,11 @@ public class BombItem extends AnimatedEntity {
     public void update() {
         if (checkBoundBomber()) {
             this.remove();
-            BombermanGame.bomberman.setBoomleft(2);
             handleSound();
+            BombermanGame.bomberman.setMaxSpeed(5f);
+            BombermanGame.bomberman.setAcceleration(1f);
+            BombermanGame.bomberman.setDeAcceleration(0.5f);
+
             BombermanGame.getMap1().update((Math.round((y)/ Sprite.SCALED_SIZE)) , Math.round((x)/Sprite.SCALED_SIZE), 0 );
         }
     }

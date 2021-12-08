@@ -23,6 +23,11 @@ public class Bomber extends MovingEntity {
     public final int maxFrame = 2;
     public boolean isMoving = false;
     private int s_timing = 0;
+    private boolean large_explosion = false;
+
+    public void setLarge_explosion(boolean large_explosion) {
+        this.large_explosion = large_explosion;
+    }
 
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
@@ -222,11 +227,18 @@ public class Bomber extends MovingEntity {
 
     public void placeBomb() {
         if(bomb.size() == boomleft) return;
-        Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize)
-                , Sprite.bomb.getFxImage());
-        bom.handleSound();
-        bomb.add(bom);
-        BombermanGame.destroyableObjects.add(bom);
+        if(large_explosion) {
+            Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize), Sprite.bomb.getFxImage(), true);
+            bom.handleSound();
+            bomb.add(bom);
+            BombermanGame.destroyableObjects.add(bom);
+        }
+        else{
+            Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize), Sprite.bomb.getFxImage(), false);
+            bom.handleSound();
+            bomb.add(bom);
+            BombermanGame.destroyableObjects.add(bom);
+        }
     }
 
     public void checkItem() {

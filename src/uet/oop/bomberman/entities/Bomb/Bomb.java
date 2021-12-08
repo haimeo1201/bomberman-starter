@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends AnimatedEntity {
-    boolean flag = false;// push 4(possibly) new image or not
+    boolean flag = false;
+    boolean push_more;// push 4(possibly) new image or not
     public int _timeAfter = 20; //time for explosions to disappear
     protected double _timeToExplode = 50; //2sec in 25fps
     protected boolean _exploded = false;
@@ -22,11 +23,12 @@ public class Bomb extends AnimatedEntity {
     public List<Sprite[]> state = new ArrayList<>();
     Sound bombSound = new Sound();
 
-    public Bomb(int xUnit, int yUnit, Image img) {
+    public Bomb(int xUnit, int yUnit, Image img,boolean _more) {
         super(xUnit, yUnit, img);
         Img.add(Sprite.bomb.getFxImage());
         pos.add("center");
         state.add(Sprite.bombs);
+        push_more = _more;
     }
 
     @Override
@@ -88,19 +90,31 @@ public class Bomb extends AnimatedEntity {
             if (pos.get(i).equals("left")) {
                 gc.drawImage(Img.get(i), x - Sprite.SCALED_SIZE, y);
             }
+            if (pos.get(i).equals("leftlast")) {
+                gc.drawImage(Img.get(i), x - 2*Sprite.SCALED_SIZE, y);
+            }
+            if (pos.get(i).equals("rightlast")) {
+                gc.drawImage(Img.get(i), x + 2*Sprite.SCALED_SIZE, y);
+            }
+            if (pos.get(i).equals("toplast")) {
+                gc.drawImage(Img.get(i), x , y - 2*Sprite.SCALED_SIZE);
+            }
+            if (pos.get(i).equals("downlast")) {
+                gc.drawImage(Img.get(i), x , y + 2*Sprite.SCALED_SIZE);
+            }
         }
     }
 
-    public void shrapnel_collision(Sprite[] sprites, String Pos, int dx, int dy) {
+    public boolean shrapnel_collision(Sprite[] sprites, String Pos, int dx, int dy) {
         for (AnimatedEntity e : BombermanGame.destroyableObjects) {
             if (x + dx == e.getX() && y + dy == e.getY()) {
                 e.blown();
                 BombermanGame.getMap1().update((Math.round((y + dy) / Sprite.SCALED_SIZE)), Math.round((x + dx) / Sprite.SCALED_SIZE), 0);
-                return;
+                return false;
             }
         }
         for (Entity e : BombermanGame.stillObjects) {
-            if (x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return;
+            if (x + dx == e.getX() && y + dy == e.getY() && e.getClass().getName().contains("Wall")) return false;
         }
         for (MovingEntity e : BombermanGame.movableEntities) {
             if (Math.round(x + dx) == Math.round(e.getX() / Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE
@@ -116,6 +130,7 @@ public class Bomb extends AnimatedEntity {
         pos.add(Pos);
         state.add(sprites);
         Img.add(sprites[0].getFxImage());
+        return true;
     }
 
     private void explosion() {
@@ -130,10 +145,25 @@ public class Bomb extends AnimatedEntity {
         flag = true;
         state.set(0, Sprite.bombs_ex);
         Img.set(0, Sprite.bombs_ex[0].getFxImage());
-        shrapnel_collision(Sprite.right_last, "right", Sprite.SCALED_SIZE, 0);
-        shrapnel_collision(Sprite.left_last, "left", -Sprite.SCALED_SIZE, 0);
-        shrapnel_collision(Sprite.top_last, "top", 0, -Sprite.SCALED_SIZE);
-        shrapnel_collision(Sprite.down_last, "down", 0, Sprite.SCALED_SIZE);
+        if(!push_more) {
+            shrapnel_collision(Sprite.right_last, "right", Sprite.SCALED_SIZE, 0);
+            shrapnel_collision(Sprite.left_last, "left", -Sprite.SCALED_SIZE, 0);
+            shrapnel_collision(Sprite.top_last, "top", 0, -Sprite.SCALED_SIZE);
+            shrapnel_collision(Sprite.down_last, "down", 0, Sprite.SCALED_SIZE);
+            return;
+        }
+        if(shrapnel_collision(Sprite.ex_horizontal,"right", Sprite.SCALED_SIZE, 0)){
+            shrapnel_collision(Sprite.right_last,"rightlast",2*Sprite.SCALED_SIZE,0);
+        }
+        if(shrapnel_collision(Sprite.ex_horizontal,"left", -Sprite.SCALED_SIZE, 0)){
+            shrapnel_collision(Sprite.left_last,"leftlast",-2*Sprite.SCALED_SIZE,0);
+        }
+        if(shrapnel_collision(Sprite.ex_vertical,"top", 0, -Sprite.SCALED_SIZE)){
+            shrapnel_collision(Sprite.top_last,"toplast",0,-2*Sprite.SCALED_SIZE);
+        }
+        if(shrapnel_collision(Sprite.ex_vertical,"down", 0, Sprite.SCALED_SIZE)){
+            shrapnel_collision(Sprite.down_last,"downlast",0,2*Sprite.SCALED_SIZE);
+        }
     }
 
 }

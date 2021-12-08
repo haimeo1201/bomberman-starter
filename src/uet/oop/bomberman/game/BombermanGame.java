@@ -13,13 +13,10 @@ import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.Enemy.*;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.item.Item;
+import uet.oop.bomberman.entities.MapEntity.item.Item;
 import uet.oop.bomberman.map.TileMap;
 import uet.oop.bomberman.sound.Sound;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,8 +133,8 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
+        items.forEach(g -> g.render(gc));
         destroyableObjects.forEach(g -> g.render(gc));
         movableEntities.forEach(g -> g.render(gc));
-        items.forEach(g -> g.render(gc));
     }
 }

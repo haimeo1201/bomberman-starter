@@ -1,9 +1,7 @@
-package uet.oop.bomberman.item;
+package uet.oop.bomberman.entities.MapEntity.item;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
 
