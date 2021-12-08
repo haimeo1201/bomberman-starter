@@ -2,8 +2,10 @@ package uet.oop.bomberman.entities.MapEntity.item;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
+import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Item extends Entity {
     public boolean isVisible() {
@@ -24,10 +26,9 @@ public abstract class Item extends Entity {
     public abstract void update();
 
     protected boolean checkBoundBomber() {
-        for (MovingEntity e:BombermanGame.movableEntities ) {
-            if (this.intersects(e)) {
-                return true;
-            }
+        if(Math.round(x)== Math.round(BombermanGame.bomberman.getX()/Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE &&
+                Math.round(y) == Math.round(BombermanGame.bomberman.getY()/Sprite.SCALED_SIZE) * Sprite.SCALED_SIZE){
+            return true;
         }
         return false;
     }

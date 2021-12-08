@@ -63,7 +63,7 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(x, y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+        return new Rectangle2D(x, y, Sprite.SCALED_SIZE - 5, Sprite.SCALED_SIZE - 5);
     }
 
     public boolean intersects(Entity e) {

@@ -88,10 +88,6 @@ public class TileMap {
                 } else if(ij == 3) {
                     object = new Portal(j, i, Sprite.portal.getFxImage());
                 } else if(ij == 4) {
-                   //Item speed = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
-                   // BombermanGame.items.add(speed);
-                    //AnimatedEntity flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                    //BombermanGame.destroyableObjects.add(flame);
                     Item speed = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
                     AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
                     BombermanGame.destroyableObjects.add(object1);
