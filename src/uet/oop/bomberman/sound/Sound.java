@@ -39,7 +39,7 @@ public class Sound {
         clip.start();
 
     }
-    public void bomberdieSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public void bomberDieSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File file = new File("res/sounds/bomberdie.wav");
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();

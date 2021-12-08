@@ -19,7 +19,10 @@ public class SpeedItem extends AnimatedEntity {
         if (checkBoundBomber()) {
             this.remove();
             handleSound();
-            BombermanGame.bomberman.setMaxSpeed(6f);
+            BombermanGame.bomberman.setMaxSpeed(5f);
+            BombermanGame.bomberman.setAcceleration(1f);
+            BombermanGame.bomberman.setDeAcceleration(0.5f);
+
             BombermanGame.getMap1().update((Math.round((y)/ Sprite.SCALED_SIZE)) , Math.round((x)/Sprite.SCALED_SIZE), 0 );
         }
     }

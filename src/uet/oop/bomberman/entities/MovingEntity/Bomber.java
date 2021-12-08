@@ -5,32 +5,36 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.game.Input;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.map.TileMap;
 import uet.oop.bomberman.sound.Sound;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomber extends MovingEntity {
     public int _timeAfter = 20; //time for explosions to disappear
 
+    protected float maxSpeed = 3f;
+    protected float acceleration = 0.8f;
+    protected float deAcceleration = 0.4f;
+
+    public final int maxFrame = 2;
+    public boolean isMoving = false;
+    private int s_timing = 0;
+
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
-    protected float maxSpeed = 3f;
-    protected float acceleration = 0.8f;
-    protected float deAcceleration = 0.4f;
-    public final int maxFrame = 2;
-    public boolean isMoving = false;
-    private int s_timing = 0;
+    public void setAcceleration(float acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public void setDeAcceleration(float deAcceleration) {
+        this.deAcceleration = deAcceleration;
+    }
 
     public void setBoomupnum(boolean boomupnum) {
         this.boomupnum = boomupnum;
@@ -72,7 +76,7 @@ public class Bomber extends MovingEntity {
         move();
         handleSound();
         mapCheck();
-        checkitem();
+        checkItem();
         doP_IMG();
         updateP_IMG();
     }
@@ -122,7 +126,7 @@ public class Bomber extends MovingEntity {
                     System.out.println("Failed to initialize foot sound!");
                     e.printStackTrace();
                 }
-                s_timing = 10;
+                s_timing = 7;
             }
         } else {
             s_timing--;
@@ -197,7 +201,7 @@ public class Bomber extends MovingEntity {
                 _timeAfter--;
             else {
                 remove();
-                bomberdieSound();
+                bomberDieSound();
                 return;
             }
             setImg(Sprite.dead[currFrame].getFxImage());
@@ -225,22 +229,21 @@ public class Bomber extends MovingEntity {
         BombermanGame.destroyableObjects.add(bom);
     }
 
-    public void checkitem() {
+    public void checkItem() {
         for (AnimatedEntity e : BombermanGame.destroyableObjects) {
-            if (x + 48 == e.getX() && y == e.getY() && e.getClass().getName().contains("Brick")) {
-                System.out.println(1);
+            if (x + Sprite.SCALED_SIZE == e.getX() && y == e.getY() && e.getClass().getName().contains("Brick")) {
                 e.blown();
                 return;
             }
         }
     }
-    public void bomberdieSound(){
+    public void bomberDieSound(){
         Sound sound = new Sound();
         try {
-            sound.bomberdieSound();
+            sound.bomberDieSound();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("bomberdie sound failed!");
+            System.out.println("die sound failed!");
         }
     }
 }

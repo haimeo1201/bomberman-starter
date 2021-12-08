@@ -5,10 +5,9 @@ import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.sound.Sound;
 
 public class FlameItem extends AnimatedEntity {
-    Sound sound = new Sound();
+
     public FlameItem(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -17,16 +16,7 @@ public class FlameItem extends AnimatedEntity {
     public void update() {
         if (checkBoundBomber()) {
             this.remove();
-            handleSound();
             BombermanGame.getMap1().update((Math.round((y)/ Sprite.SCALED_SIZE)) , Math.round((x)/Sprite.SCALED_SIZE), 0 );
-        }
-    }
-    public void handleSound(){
-        try {
-            sound.powerupSound();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("powerup sound failed!");
         }
     }
 }

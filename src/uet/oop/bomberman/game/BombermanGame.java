@@ -25,7 +25,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    public static final double FPS = 24;
+    public static final double FPS = 22;
 
     //OBJ LIST
     public static final List<MovingEntity> movableEntities = new ArrayList<>();
@@ -49,7 +49,7 @@ public class BombermanGame extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+    public void start(Stage stage) throws Exception {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -70,23 +70,16 @@ public class BombermanGame extends Application {
 
         //Sound
         Sound sound = new Sound();
+        sound.backgroundSound();
 
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
-        //Balloom balloom3 = new Balloom(24, 5, Sprite.balloom_left1.getFxImage());
 
-        //Oneal oneal1 = new Oneal(17 , 1 , Sprite.oneal_left1.getFxImage());
         Oneal oneal2 = new Oneal(24 , 3 , Sprite.oneal_left1.getFxImage());
-        //Oneal oneal3 = new Oneal(26 , 11 , Sprite.oneal_left1.getFxImage());
         Oneal oneal4 = new Oneal(11 , 7 , Sprite.oneal_left1.getFxImage());
 
         Doll doll1 = new Doll(27, 5, Sprite.doll_left1.getFxImage());
-
-        Minvo minvo1 = new Minvo(17 , 1 , Sprite.minvo_left1.getFxImage());
-        Minvo minvo2 = new Minvo(26 , 11 , Sprite.minvo_left1.getFxImage());
-
-        Kondoria kondoria1 = new Kondoria(5 , 11 , Sprite.minvo_left1.getFxImage());
 
         //TIMER
         AnimationTimer timer = new AnimationTimer() {
@@ -110,25 +103,16 @@ public class BombermanGame extends Application {
         timer.start();
 
         map1.drawMap();
+
         movableEntities.add(bomberman);
+
         movableEntities.add(balloom1);
         movableEntities.add(balloom2);
-        //movableEntities.add(balloom3);
-
-        //movableEntities.add(oneal1);
         movableEntities.add(oneal2);
-        //movableEntities.add(oneal3);
         movableEntities.add(oneal4);
-
         movableEntities.add(doll1);
 
-        movableEntities.add(minvo1);
-        movableEntities.add(minvo2);
 
-        movableEntities.add(kondoria1);
-
-
-            sound.backgroundSound();
     }
 
     public void update() {

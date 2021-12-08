@@ -29,6 +29,10 @@ public class MovingEntity extends AnimatedEntity {
         alive = false;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     public void mapCheck() {
         TileMap map = BombermanGame.getMap1();
         int[][] mapArr = BombermanGame.getMap1().getMap();

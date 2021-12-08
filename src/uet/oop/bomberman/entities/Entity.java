@@ -36,6 +36,14 @@ public abstract class Entity {
         return this.x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public void remove() {
         isRemoved = true;
     }
