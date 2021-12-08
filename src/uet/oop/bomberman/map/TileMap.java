@@ -8,7 +8,6 @@ import uet.oop.bomberman.entities.MapEntity.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.item.Item;
-import uet.oop.bomberman.item.SpeedItem;
 
 
 import java.io.BufferedReader;
@@ -87,10 +86,22 @@ public class TileMap {
                 } else if(ij == 3) {
                     object = new Portal(j, i, Sprite.portal.getFxImage());
                 } else if(ij == 4) {
-//                    Item speed = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
-//                    BombermanGame.items.add(speed);
+                   //Item speed = new SpeedItem(j, i, Sprite.powerup_flames.getFxImage());
+                   // BombermanGame.items.add(speed);
+                    //AnimatedEntity flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+                    //BombermanGame.destroyableObjects.add(flame);
+                    AnimatedEntity speed = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+                    BombermanGame.destroyableObjects.add(speed);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                }
+                else if(ij == 5) {
                     AnimatedEntity flame = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
                     BombermanGame.destroyableObjects.add(flame);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                }
+                else if(ij == 6) {
+                    AnimatedEntity bombitem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
+                    BombermanGame.destroyableObjects.add(bombitem);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 else if(ij == 9){

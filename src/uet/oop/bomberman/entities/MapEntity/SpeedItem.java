@@ -7,9 +7,10 @@ import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.sound.Sound;
 
-public class FlameItem extends AnimatedEntity {
+public class SpeedItem extends AnimatedEntity {
     Sound sound = new Sound();
-    public FlameItem(int x, int y, Image img) {
+
+    public SpeedItem(int x, int y, Image img) {
         super(x, y, img);
     }
 
@@ -18,6 +19,7 @@ public class FlameItem extends AnimatedEntity {
         if (checkBoundBomber()) {
             this.remove();
             handleSound();
+            BombermanGame.bomberman.setMaxSpeed(6f);
             BombermanGame.getMap1().update((Math.round((y)/ Sprite.SCALED_SIZE)) , Math.round((x)/Sprite.SCALED_SIZE), 0 );
         }
     }
@@ -30,3 +32,4 @@ public class FlameItem extends AnimatedEntity {
         }
     }
 }
+

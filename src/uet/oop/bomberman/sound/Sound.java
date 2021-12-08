@@ -47,4 +47,12 @@ public class Sound {
         clip.start();
 
     }
+    public void powerupSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("res/sounds/powerup.wav");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
+
+    }
 }

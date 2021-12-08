@@ -41,7 +41,7 @@ public class Bomber extends MovingEntity {
     }
 
     public boolean boomupnum = false;
-    public int boomleft = 2;
+    public int boomleft = 1;
 
     List<Bomb> bomb = new ArrayList();
 
