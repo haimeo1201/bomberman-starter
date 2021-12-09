@@ -37,6 +37,7 @@ public class BombermanGame extends Application {
     public static final List<Entity> stillObjects = new ArrayList<>();
     public static final List<AnimatedEntity> destroyableObjects = new ArrayList<>();
     ///** ADD CHOOSE MAP IN GUI **\\\
+    public static Sound sound = new Sound();
     public static TileMap map1 = new TileMap("res/levels/map1.txt");
     public static final int WIDTH = map1.getMapWidth();
     public static final int HEIGHT = map1.getMapHeight();
@@ -84,7 +85,7 @@ public class BombermanGame extends Application {
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
 
-        Oneal oneal2 = new Oneal(24, 3, Sprite.oneal_left1.getFxImage());
+        Doll doll = new Doll(25, 6, Sprite.doll_left1.getFxImage());
         Oneal oneal4 = new Oneal(11, 7, Sprite.oneal_left1.getFxImage());
 
         Kondoria kondoria = new Kondoria(11, 8, Sprite.kondoria_right1.getFxImage());
@@ -111,12 +112,13 @@ public class BombermanGame extends Application {
         timer.start();
 
         map1.drawMap();
+        //sound.backgroundSound();
 
         movableEntities.add(bomberman);
 
         movableEntities.add(balloom1);
         movableEntities.add(balloom2);
-        movableEntities.add(oneal2);
+        movableEntities.add(doll);
         movableEntities.add(oneal4);
         movableEntities.add(kondoria);
     }
