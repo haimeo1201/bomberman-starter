@@ -46,13 +46,9 @@ public class BombermanGame extends Application {
     public static final List<Item> items = new ArrayList<>();
 
 
-    public static boolean isRunning = true;
+    public static int isRunning = 0;
 
-    public static boolean isRunning() {
-        return isRunning;
-    }
-
-    public static void setIsRunning(boolean isRunning) {
+    public static void setIsRunning(int isRunning) {
         BombermanGame.isRunning = isRunning;
     }
 
@@ -144,18 +140,32 @@ public void update(Stage stage) {
     }
 
     public void render(Stage stage) {
-        if(isRunning) {
+        if(isRunning == 0) {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             stillObjects.forEach(g -> g.render(gc));
             items.forEach(g -> g.render(gc));
             destroyableObjects.forEach(g -> g.render(gc));
             movableEntities.forEach(g -> g.render(gc));
         }
-        else {
+        else if (isRunning == 1){
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             StackPane root = new StackPane();
             Scene scene = new Scene(root, 720, 272);
             Image img = new Image("https://scontent.fhan2-2.fna.fbcdn.net/v/t1.18169-9/422446_359366724083882_1343284803_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=e3f864&_nc_ohc=cZtuer57DfcAX-R3U5O&_nc_ht=scontent.fhan2-2.fna&oh=dfbb50d3ee9721b39ac1174d620c453e&oe=61D75DE9");
+            BackgroundImage bImg = new BackgroundImage(img,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            Background bGround = new Background(bImg);
+            root.setBackground(bGround);
+            stage.setScene(scene);
+        }
+        else{
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            StackPane root = new StackPane();
+            Scene scene = new Scene(root, 626, 417);
+            Image img = new Image("https://img.freepik.com/free-vector/you-win-lettering-pop-art-text-banner_185004-60.jpg?size=626&ext=jpg");
             BackgroundImage bImg = new BackgroundImage(img,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,

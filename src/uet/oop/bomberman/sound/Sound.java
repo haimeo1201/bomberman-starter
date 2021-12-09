@@ -71,4 +71,12 @@ public class Sound {
 
     }
 
+    public void bomberWinSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        File file = new File("res/sounds/win.wav");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.start();
+
+    }
 }

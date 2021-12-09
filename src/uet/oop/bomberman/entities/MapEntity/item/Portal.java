@@ -14,10 +14,10 @@ public class Portal extends Item {
 
     @Override
     public void update() {
-        if (checkBoundBomber() && BombermanGame.movableEntities.size() == 1) {
+        if (checkBoundBomber() ) {
             this.remove();
-            BombermanGame.bomberman.setX(Sprite.SCALED_SIZE);
-            BombermanGame.bomberman.setY(Sprite.SCALED_SIZE);
+            BombermanGame.setIsRunning(2);
+            BombermanGame.bomberman.setWin(true);
             BombermanGame.getMap1().update((Math.round((y)/ Sprite.SCALED_SIZE)) , Math.round((x)/Sprite.SCALED_SIZE), 0 );
         }
     }

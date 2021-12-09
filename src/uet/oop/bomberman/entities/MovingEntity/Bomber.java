@@ -19,7 +19,7 @@ public class Bomber extends MovingEntity {
     protected float maxSpeed = 3f;
     protected float acceleration = 0.8f;
     protected float deAcceleration = 0.4f;
-
+    public boolean win = false;
     public final int maxFrame = 2;
     public boolean isMoving = false;
     private int s_timing = 0;
@@ -58,6 +58,10 @@ public class Bomber extends MovingEntity {
 
     public Bomber(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
     }
 
     @Override
@@ -201,13 +205,19 @@ public class Bomber extends MovingEntity {
     }
 
     public void updateP_IMG() {
+        if(win){
+            remove();
+            bomberWinSound();
+            BombermanGame.setIsRunning(2);
+            return;
+        }
         if (!alive) {
             if (_timeAfter > 0)
                 _timeAfter--;
             else {
                 remove();
                 bomberDieSound();
-                BombermanGame.setIsRunning(false);
+                BombermanGame.setIsRunning(1);
                 return;
             }
             setImg(Sprite.dead[currFrame].getFxImage());
@@ -254,6 +264,15 @@ public class Bomber extends MovingEntity {
         Sound sound = new Sound();
         try {
             sound.bomberDieSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("die sound failed!");
+        }
+    }
+    public void bomberWinSound(){
+        Sound sound = new Sound();
+        try {
+            sound.bomberWinSound();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("die sound failed!");
