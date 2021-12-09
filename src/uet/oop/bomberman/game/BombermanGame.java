@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
@@ -17,6 +19,7 @@ import uet.oop.bomberman.entities.MapEntity.item.Item;
 import uet.oop.bomberman.map.TileMap;
 import uet.oop.bomberman.sound.Sound;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +39,20 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     public static final Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static final List<Item> items = new ArrayList<>();
+    public static Sound sound = new Sound();
+
+    public static boolean isRunning = true;
+
+    public static boolean isRunning() {
+        return isRunning;
+    }
+
+    public static void setIsRunning(boolean isRunning) {
+        BombermanGame.isRunning = isRunning;
+    }
 
     public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
+        Application.launch(args);
     }
 
     public static TileMap getMap1() {
@@ -66,17 +80,17 @@ public class BombermanGame extends Application {
         bomberman.input(scene);
 
         //Sound
-        Sound sound = new Sound();
         sound.backgroundSound();
+
 
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
 
-        Oneal oneal2 = new Oneal(24 , 3 , Sprite.oneal_left1.getFxImage());
-        Oneal oneal4 = new Oneal(11 , 7 , Sprite.oneal_left1.getFxImage());
+        Oneal oneal2 = new Oneal(24, 3, Sprite.oneal_left1.getFxImage());
+        Oneal oneal4 = new Oneal(11, 7, Sprite.oneal_left1.getFxImage());
 
-        Doll doll1 = new Doll(27, 5, Sprite.doll_left1.getFxImage());
+        Kondoria kondoria = new Kondoria(11, 8, Sprite.kondoria_right1.getFxImage());
 
         //TIMER
         AnimationTimer timer = new AnimationTimer() {
@@ -90,8 +104,8 @@ public class BombermanGame extends Application {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
                 while (delta >= 1) {
-                    render();
-                    update();
+                    render(stage);
+                    update(stage);
                     updates++;
                     delta--;
                 }
@@ -107,12 +121,11 @@ public class BombermanGame extends Application {
         movableEntities.add(balloom2);
         movableEntities.add(oneal2);
         movableEntities.add(oneal4);
-        movableEntities.add(doll1);
-
+        movableEntities.add(kondoria);
 
     }
 
-    public void update() {
+    public void update(Stage stage) {
         destroyableObjects.forEach(Entity::update);
         for (int i = 0; i < destroyableObjects.size(); i++) {
             Entity a = destroyableObjects.get(i);
@@ -130,11 +143,23 @@ public class BombermanGame extends Application {
         }
     }
 
-    public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        items.forEach(g -> g.render(gc));
-        destroyableObjects.forEach(g -> g.render(gc));
-        movableEntities.forEach(g -> g.render(gc));
+    public void render(Stage stage) {
+        if(isRunning) {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            stillObjects.forEach(g -> g.render(gc));
+            items.forEach(g -> g.render(gc));
+            destroyableObjects.forEach(g -> g.render(gc));
+            movableEntities.forEach(g -> g.render(gc));
+        }
+        else {
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            Group root = new Group();
+            Scene s = new Scene(root, 300, 300, Color.BLACK);
+            Rectangle r = new Rectangle(25,25,250,250);
+            r.setFill(Color.BLUE);
+            root.getChildren().add(r);
+            stage.setScene(s);
+            sound.setPlaying(false);
+        }
     }
 }

@@ -207,6 +207,7 @@ public class Bomber extends MovingEntity {
             else {
                 remove();
                 bomberDieSound();
+                BombermanGame.setIsRunning(false);
                 return;
             }
             setImg(Sprite.dead[currFrame].getFxImage());

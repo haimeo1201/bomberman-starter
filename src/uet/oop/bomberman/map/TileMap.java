@@ -4,12 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MapEntity.*;
-import uet.oop.bomberman.entities.MapEntity.item.BombItem;
-import uet.oop.bomberman.entities.MapEntity.item.FlameItem;
-import uet.oop.bomberman.entities.MapEntity.item.SpeedItem;
+import uet.oop.bomberman.entities.MapEntity.item.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.game.BombermanGame;
-import uet.oop.bomberman.entities.MapEntity.item.Item;
 
 
 import java.io.BufferedReader;
@@ -86,7 +83,11 @@ public class TileMap {
                     BombermanGame.destroyableObjects.add(object1);
                     object = new Grass(j, i, Sprite.grass.getFxImage());
                 } else if(ij == 3) {
-                    object = new Portal(j, i, Sprite.portal.getFxImage());
+                    Item portal = new Portal(j, i, Sprite.portal.getFxImage());
+                    AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
+                    BombermanGame.destroyableObjects.add(object1);
+                    BombermanGame.items.add(portal);
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 } else if(ij == 4) {
                     Item speed = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
                     AnimatedEntity object1 = new Brick(j, i, Sprite.brick.getFxImage());
