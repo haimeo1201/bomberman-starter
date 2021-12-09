@@ -14,7 +14,7 @@ public class Portal extends Item {
 
     @Override
     public void update() {
-        if (checkBoundBomber() ) {
+        if (checkBoundBomber() && BombermanGame.movableEntities.size() == 1) {
             this.remove();
             BombermanGame.setIsRunning(2);
             BombermanGame.bomberman.setWin(true);
