@@ -1,15 +1,18 @@
 package uet.oop.bomberman.sound;
 
+import uet.oop.bomberman.entities.MovingEntity.Bomber;
+import uet.oop.bomberman.game.BombermanGame;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
 public class Sound {
 
-    private static boolean playing;
+    private static boolean playing = true;
 
-    public void setPlaying(boolean playing) {
-        Sound.playing = playing;
+    public void stop() {
+        playing = false;
     }
 
     public void bombSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -27,21 +30,18 @@ public class Sound {
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.start();
-
     }
 
     public void backgroundSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-        File file = new File("res/sounds/background.wav");
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-        Clip clip = AudioSystem.getClip();
         if(playing) {
+            File file = new File("res/sounds/background.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } else {
-            clip.stop();
+            System.out.println("stopped");
         }
-        //Thread.sleep(10000);
-        //clip.start();
     }
 
     public void enemydieSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {

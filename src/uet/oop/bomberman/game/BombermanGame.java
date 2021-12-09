@@ -2,10 +2,14 @@ package uet.oop.bomberman.game;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -22,6 +26,7 @@ import uet.oop.bomberman.sound.Sound;
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BombermanGame extends Application {
 
@@ -39,7 +44,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     public static final Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static final List<Item> items = new ArrayList<>();
-    public static Sound sound = new Sound();
+
 
     public static boolean isRunning = true;
 
@@ -52,7 +57,7 @@ public class BombermanGame extends Application {
     }
 
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 
     public static TileMap getMap1() {
@@ -78,10 +83,6 @@ public class BombermanGame extends Application {
 
         //BOMBER
         bomberman.input(scene);
-
-        //Sound
-        sound.backgroundSound();
-
 
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
@@ -122,10 +123,9 @@ public class BombermanGame extends Application {
         movableEntities.add(oneal2);
         movableEntities.add(oneal4);
         movableEntities.add(kondoria);
-
     }
 
-    public void update(Stage stage) {
+public void update(Stage stage) {
         destroyableObjects.forEach(Entity::update);
         for (int i = 0; i < destroyableObjects.size(); i++) {
             Entity a = destroyableObjects.get(i);
@@ -153,13 +153,17 @@ public class BombermanGame extends Application {
         }
         else {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            Group root = new Group();
-            Scene s = new Scene(root, 300, 300, Color.BLACK);
-            Rectangle r = new Rectangle(25,25,250,250);
-            r.setFill(Color.BLUE);
-            root.getChildren().add(r);
-            stage.setScene(s);
-            sound.setPlaying(false);
+            StackPane root = new StackPane();
+            Scene scene = new Scene(root, 720, 272);
+            Image img = new Image("https://scontent.fhan2-2.fna.fbcdn.net/v/t1.18169-9/422446_359366724083882_1343284803_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=e3f864&_nc_ohc=cZtuer57DfcAX-R3U5O&_nc_ht=scontent.fhan2-2.fna&oh=dfbb50d3ee9721b39ac1174d620c453e&oe=61D75DE9");
+            BackgroundImage bImg = new BackgroundImage(img,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            Background bGround = new Background(bImg);
+            root.setBackground(bGround);
+            stage.setScene(scene);
         }
     }
 }
