@@ -59,7 +59,6 @@ public class Sound {
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.start();
-
     }
 
     public void powerupSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -77,6 +76,5 @@ public class Sound {
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.start();
-
     }
 }

@@ -84,6 +84,7 @@ public class BombermanGame extends Application {
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
+        Minvo minvo = new Minvo(5,1,Sprite.minvo_left1.getFxImage());
 
         Doll doll = new Doll(25, 6, Sprite.doll_left1.getFxImage());
         Oneal oneal4 = new Oneal(11, 7, Sprite.oneal_left1.getFxImage());
@@ -112,10 +113,11 @@ public class BombermanGame extends Application {
         timer.start();
 
         map1.drawMap();
-        //sound.backgroundSound();
+        sound.backgroundSound();
 
         movableEntities.add(bomberman);
 
+        movableEntities.add(minvo);
         movableEntities.add(balloom1);
         movableEntities.add(balloom2);
         movableEntities.add(doll);
@@ -162,6 +164,7 @@ public void update(Stage stage) {
             Background bGround = new Background(bImg);
             root.setBackground(bGround);
             stage.setScene(scene);
+            stage.centerOnScreen();
         }
         else{
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -176,6 +179,7 @@ public void update(Stage stage) {
             Background bGround = new Background(bImg);
             root.setBackground(bGround);
             stage.setScene(scene);
+            stage.centerOnScreen();
         }
     }
 }
