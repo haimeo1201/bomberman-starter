@@ -8,12 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sound {
-
-    private static boolean playing = true;
-
-    public void stop() {
-        playing = false;
-    }
+    public boolean stop = true;
 
     public void bombSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         File file = new File("res/sounds/bomb.wav");
@@ -21,7 +16,6 @@ public class Sound {
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.start();
-
     }
 
     public void footSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -33,14 +27,14 @@ public class Sound {
     }
 
     public void backgroundSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
-        if(playing) {
-            File file = new File("res/sounds/background.wav");
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } else {
-            System.out.println("stopped");
+        stop = false;
+        File file = new File("res/sounds/background.wav");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if(stop) {
+            clip.stop();
         }
     }
 
@@ -76,5 +70,9 @@ public class Sound {
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
         clip.start();
+    }
+
+    public void stop(){
+        stop = true;
     }
 }

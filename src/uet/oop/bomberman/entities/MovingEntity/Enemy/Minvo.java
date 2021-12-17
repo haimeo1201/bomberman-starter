@@ -10,8 +10,8 @@ public class Minvo extends MovingEntity {
 
     protected Input e_input = new Input();
 
-    protected float maxSpeed = 10f;
-    protected float acceleration = 1f;
+    protected float maxSpeed = 4f;
+    protected float acceleration = 0.8f;
     public int _timeAfter = 20;
     Sound sound = new Sound();
 

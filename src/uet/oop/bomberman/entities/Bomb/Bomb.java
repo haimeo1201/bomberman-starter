@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.MovingEntity.Bomber;
 import uet.oop.bomberman.entities.MovingEntity.MovingEntity;
 import uet.oop.bomberman.game.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
@@ -142,6 +143,7 @@ public class Bomb extends AnimatedEntity {
     }
 
     public void updateExplosion() {
+        BombermanGame.getMap1().update(Math.round(y / Sprite.SCALED_SIZE) , Math.round(x / Sprite.SCALED_SIZE) , 0);
         flag = true;
         state.set(0, Sprite.bombs_ex);
         Img.set(0, Sprite.bombs_ex[0].getFxImage());

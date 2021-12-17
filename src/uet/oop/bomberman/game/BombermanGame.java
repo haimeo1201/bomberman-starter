@@ -24,20 +24,23 @@ import uet.oop.bomberman.map.TileMap;
 import uet.oop.bomberman.sound.Sound;
 
 import javax.security.auth.login.AccountNotFoundException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class BombermanGame extends Application {
 
-    public static final double FPS = 22;
+    public static final double FPS = 24;
 
     //OBJ LIST
     public static final List<MovingEntity> movableEntities = new ArrayList<>();
     public static final List<Entity> stillObjects = new ArrayList<>();
     public static final List<AnimatedEntity> destroyableObjects = new ArrayList<>();
     ///** ADD CHOOSE MAP IN GUI **\\\
-    public static Sound sound = new Sound();
     public static TileMap map1 = new TileMap("res/levels/map1.txt");
     public static final int WIDTH = map1.getMapWidth();
     public static final int HEIGHT = map1.getMapHeight();
@@ -46,6 +49,7 @@ public class BombermanGame extends Application {
     public static final Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
     public static final List<Item> items = new ArrayList<>();
 
+    public static final Sound bkgSound = new Sound();
 
     public static int isRunning = 0;
 
@@ -54,7 +58,7 @@ public class BombermanGame extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 
     public static TileMap getMap1() {
@@ -78,18 +82,21 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
+        //bkgSound.backgroundSound();
+
         //BOMBER
         bomberman.input(scene);
 
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
-        Minvo minvo = new Minvo(5,1,Sprite.minvo_left1.getFxImage());
+        Minvo minvo = new Minvo(15,7,Sprite.minvo_left1.getFxImage());
 
         Doll doll = new Doll(25, 6, Sprite.doll_left1.getFxImage());
         Oneal oneal4 = new Oneal(11, 7, Sprite.oneal_left1.getFxImage());
 
         Kondoria kondoria = new Kondoria(11, 8, Sprite.kondoria_right1.getFxImage());
+
 
         //TIMER
         AnimationTimer timer = new AnimationTimer() {
@@ -103,17 +110,23 @@ public class BombermanGame extends Application {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
                 while (delta >= 1) {
-                    render(stage);
                     update(stage);
+                    try {
+                        render(stage);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     updates++;
                     delta--;
+                    if(isRunning != 0) {
+                        stop();
+                    }
                 }
             }
         };
         timer.start();
 
         map1.drawMap();
-        sound.backgroundSound();
 
         movableEntities.add(bomberman);
 
@@ -143,7 +156,7 @@ public void update(Stage stage) {
         }
     }
 
-    public void render(Stage stage) {
+    public void render(Stage stage) throws InterruptedException {
         if(isRunning == 0) {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             stillObjects.forEach(g -> g.render(gc));
@@ -153,33 +166,39 @@ public void update(Stage stage) {
         }
         else if (isRunning == 1){
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            stage.close();
+            Stage loseStage = new Stage();
             StackPane root = new StackPane();
             Scene scene = new Scene(root, 720, 272);
-            Image img = new Image("https://scontent.fhan2-2.fna.fbcdn.net/v/t1.18169-9/422446_359366724083882_1343284803_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=e3f864&_nc_ohc=cZtuer57DfcAX-R3U5O&_nc_ht=scontent.fhan2-2.fna&oh=dfbb50d3ee9721b39ac1174d620c453e&oe=61D75DE9");
-            BackgroundImage bImg = new BackgroundImage(img,
+            Image lose = new Image("https://scontent.fhan2-2.fna.fbcdn.net/v/t1.18169-9/422446_359366724083882_1343284803_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=e3f864&_nc_ohc=cZtuer57DfcAX-R3U5O&_nc_ht=scontent.fhan2-2.fna&oh=dfbb50d3ee9721b39ac1174d620c453e&oe=61D75DE9");
+            BackgroundImage bImg = new BackgroundImage(lose,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             Background bGround = new Background(bImg);
             root.setBackground(bGround);
-            stage.setScene(scene);
-            stage.centerOnScreen();
+            loseStage.setScene(scene);
+            loseStage.show();
+            loseStage.centerOnScreen();
         }
         else{
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            stage.close();
+            Stage winStage = new Stage();
             StackPane root = new StackPane();
             Scene scene = new Scene(root, 626, 417);
-            Image img = new Image("https://img.freepik.com/free-vector/you-win-lettering-pop-art-text-banner_185004-60.jpg?size=626&ext=jpg");
-            BackgroundImage bImg = new BackgroundImage(img,
+            Image win = new Image("https://img.freepik.com/free-vector/you-win-lettering-pop-art-text-banner_185004-60.jpg?size=626&ext=jpg");
+            BackgroundImage bImg = new BackgroundImage(win,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             Background bGround = new Background(bImg);
             root.setBackground(bGround);
-            stage.setScene(scene);
-            stage.centerOnScreen();
+            winStage.setScene(scene);
+            winStage.show();
+            winStage.centerOnScreen();
         }
     }
 }

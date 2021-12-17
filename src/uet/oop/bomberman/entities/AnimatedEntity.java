@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class AnimatedEntity extends Entity {
     public boolean destroyed = false;
-    protected final int MAX_ANIMATE = 600;
+    protected final int MAX_ANIMATE = 2000;
     protected int _animate = 0;
 
     public AnimatedEntity(int xUnit, int yUnit, Image img) {

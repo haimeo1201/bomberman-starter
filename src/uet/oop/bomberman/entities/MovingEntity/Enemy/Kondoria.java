@@ -10,7 +10,7 @@ public class Kondoria extends MovingEntity {
 
     protected Input e_input = new Input();
 
-    protected float maxSpeed = 6f;
+    protected float maxSpeed = 3f;
     protected float acceleration = 0.4f;
     public int _timeAfter = 20;
     Sound sound = new Sound();

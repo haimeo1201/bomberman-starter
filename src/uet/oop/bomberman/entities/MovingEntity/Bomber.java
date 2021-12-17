@@ -16,9 +16,9 @@ import java.util.List;
 public class Bomber extends MovingEntity {
     public int _timeAfter = 20; //time for explosions to disappear
 
-    protected float maxSpeed = 3f;
-    protected float acceleration = 0.8f;
-    protected float deAcceleration = 0.4f;
+    protected float maxSpeed = 3.5f;
+    protected float acceleration = 2f;
+    protected float deAcceleration = 0.6f;
     public boolean win = false;
     public final int maxFrame = 2;
     public boolean isMoving = false;
@@ -242,6 +242,7 @@ public class Bomber extends MovingEntity {
             Bomb bom = new Bomb(Math.round(x / tileSize), Math.round(y / tileSize), Sprite.bomb.getFxImage(), true);
             bom.handleSound();
             bomb.add(bom);
+            //BombermanGame.getMap1().update(Math.round(x / tileSize) , Math.round(y / tileSize) , 9);
             BombermanGame.destroyableObjects.add(bom);
         }
         else{
@@ -249,6 +250,7 @@ public class Bomber extends MovingEntity {
             bom.handleSound();
             bomb.add(bom);
             BombermanGame.destroyableObjects.add(bom);
+            //BombermanGame.getMap1().update(Math.round(y / tileSize), Math.round(x / tileSize), 9);
         }
     }
 

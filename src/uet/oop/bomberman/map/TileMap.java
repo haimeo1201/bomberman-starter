@@ -2,6 +2,7 @@ package uet.oop.bomberman.map;
 
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MapEntity.*;
 import uet.oop.bomberman.entities.MapEntity.item.*;
