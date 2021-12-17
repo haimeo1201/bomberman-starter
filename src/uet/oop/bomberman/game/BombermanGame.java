@@ -87,6 +87,7 @@ public class BombermanGame extends Application {
         //BOMBER
         bomberman.input(scene);
 
+        bkgSound.backgroundSound();
         //ENEMY
         Balloom balloom1 = new Balloom(13, 1, Sprite.balloom_left1.getFxImage());
         Balloom balloom2 = new Balloom(18, 3, Sprite.balloom_left1.getFxImage());
